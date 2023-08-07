@@ -46,6 +46,7 @@ services:
     container_name: traydrop_php
     volumes:
       - ./src:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
       - "9000:9000"
     command: sh -c "chmod o+w /var/www/html/storage/ -R && php /var/www/html/artisan key:generate && php-fpm"
