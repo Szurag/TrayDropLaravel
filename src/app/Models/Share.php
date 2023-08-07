@@ -14,11 +14,17 @@ class Share extends Model
     protected $fillable = [
         'user_id',
         'file_id',
+        'file_path',
         'download_code',
         'expiration_date',
     ];
 
     protected $hidden = [
-        'user_id'
+        'user_id',
+        'file_path',
+        'id',
+        'file_id',
+        'created_at',
+        'updated_at',
     ];
 }

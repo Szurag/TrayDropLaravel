@@ -11,6 +11,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('', [ClipboardController::class, 'store']);
         Route::get('/updates', [ClipboardController::class, 'updates']);
         Route::get('/{id}', [ClipboardController::class, 'show']);
+        Route::delete('/all', [ClipboardController::class, 'destroyAll']);
         Route::delete('/{id}', [ClipboardController::class, 'destroy']);
     });
 });

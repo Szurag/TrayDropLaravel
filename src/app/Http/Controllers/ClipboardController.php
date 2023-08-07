@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\HashCrypt;
 use App\Models\Clipboard;
 use App\Models\History;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -82,7 +83,7 @@ class ClipboardController extends Controller
     public function updates(Request $request) : JsonResponse {
         $timeout = 90;
         $lastClipId = Clipboard::where('user_id', Auth::id())->max('id');
-        $lastHistoryClipId = History::where('userId', Auth::id())->where('item_type', 'clip')->orderBy('created_at', 'desc')->first();
+        $lastHistoryClipId = History::where('userId', Auth::id())->where('item_type', 'clip')->orderBy('id', 'desc')->first();
 
         if ($lastClipId === null)
             $lastClipId = 0;
@@ -96,20 +97,18 @@ class ClipboardController extends Controller
         while (time() - $startTime < $timeout) {
             $newClips = Clipboard::where('user_id', Auth::id())
                 ->where('id', '>', $lastClipId)
-                ->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
                 ->limit(3)
                 ->get();
 
             if ($newClips->count() > 0) {
-                return response()->json([
-                    'newClips' => $newClips
-                ]);
+                return response()->json($newClips);
             }
 
             $deletedClips = History::where('userId', Auth::id())
                 ->where('item_type', 'clip')
                 ->where('id', '>', $lastHistoryClipId)
-                ->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
                 ->limit(3)
                 ->get();
 
@@ -123,11 +122,6 @@ class ClipboardController extends Controller
         }
 
         return response()->json([], 204);
-    }
-
-    public function show(string $id)
-    {
-
     }
 
     public function destroy(string $id): JsonResponse
@@ -152,6 +146,25 @@ class ClipboardController extends Controller
             'message' => 'Clipboard item deleted.'
         ]);
 
+    }
+
+    public function destroyAll(Request $request): JsonResponse
+    {
+        $clipboards = Clipboard::where('user_id', Auth::id())->get();
+
+        foreach ($clipboards as $clipboard) {
+            History::create([
+                'itemId' => $clipboard->id,
+                'item_type' => 'clip',
+                'userId' => Auth::id(),
+            ]);
+        }
+
+        Clipboard::where('user_id', Auth::id())->delete();
+
+        return response()->json([
+            'message' => 'Clipboard items deleted.'
+        ]);
     }
 
 }

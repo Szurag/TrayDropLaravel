@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("file_id");
+            $table->string("file_path")->nullable();
             $table->string("download_code")->unique();
             $table->timestamp("expiration_date");
             $table->unsignedSmallInteger("count_of_share")->default(0);

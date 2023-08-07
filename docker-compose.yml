@@ -16,6 +16,7 @@ services:
     depends_on:
       - php
       - mariadb
+      - redis
     networks:
       - laravel
   
@@ -46,9 +47,10 @@ services:
     container_name: traydrop_php
     volumes:
       - ./src:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
       - "9000:9000"
-    command: sh -c "chmod o+w /var/www/html/storage/ -R && php /var/www/html/artisan key:generate && php-fpm"
+    command: sh -c "chmod o+w /var/www/html/storage/ -R && composer install --working-dir /var/www/html && php /var/www/html/artisan key:generate && php-fpm"
 
     networks:
       - laravel
@@ -64,3 +66,13 @@ services:
       - laravel
     ports:
       - "8080:80"
+
+  redis:
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./redis:/data
+    networks:
+      - laravel
