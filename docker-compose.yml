@@ -1,0 +1,66 @@
+version: '3.9'
+
+networks:
+  laravel:
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: traydrop_nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - mariadb
+    networks:
+      - laravel
+  
+  mariadb:
+    image: 'mariadb:latest'
+    container_name: traydrop_mariadb
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "2137:3306"
+    volumes:
+      - ./mysql:/var/lib/mariadb
+    environment:
+      MARIADB_DATABASE: 'laravel'
+      MARIADB_USER: 'tray'
+      MARIADB_PASSWORD: 'password'
+      MARIADB_ROOT_PASSWORD: 'secret'
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mariadb
+    networks:
+      - laravel
+
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: traydrop_php
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "9000:9000"
+    command: sh -c "chmod o+w /var/www/html/storage/ -R && php /var/www/html/artisan key:generate && php-fpm"
+
+    networks:
+      - laravel
+
+  phpmyadmin:
+    container_name: traydrop_phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+    networks:
+      - laravel
+    ports:
+      - "8080:80"
