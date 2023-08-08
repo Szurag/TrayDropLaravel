@@ -111,7 +111,7 @@ class FileController extends Controller
     public function updates(Request $request) : JsonResponse {
         $timeout = 90;
         $lastFileId = File::where('user_id', Auth::id())->max('id');
-        $lastHistoryFileId = History::where('userId', Auth::id())->where('item_type', 'file')->orderBy('created_at', 'desc')->first();
+        $lastHistoryFileId = History::where('userId', Auth::id())->where('item_type', 'file')->orderBy('id', 'desc')->first();
 
         if ($lastFileId === null)
             $lastFileId = 0;
@@ -121,13 +121,11 @@ class FileController extends Controller
         else
             $lastHistoryFileId = $lastHistoryFileId->id;
 
-
-
         $startTime = time();
         while (time() - $startTime < $timeout) {
             $newFiles = File::where('user_id', Auth::id())
                 ->where('id', '>', $lastFileId)
-                ->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
                 ->limit(3)
                 ->get();
 
@@ -138,7 +136,7 @@ class FileController extends Controller
             $deletedFiles = History::where('userId', Auth::id())
                 ->where('item_type', 'file')
                 ->where('id', '>', $lastHistoryFileId)
-                ->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
                 ->limit(3)
                 ->get();
 
@@ -258,7 +256,10 @@ class FileController extends Controller
 
         $share = Share::where('file_id', $id)->first();
 
-        Storage::delete($share->file_path);
+        if ($share) {
+            Storage::delete($share->file_path);
+        }
+
         Storage::delete($file->path);
 
         History::create([
@@ -271,6 +272,31 @@ class FileController extends Controller
 
         return response()->json([
             'message' => 'File deleted.'
+        ]);
+    }
+
+    public function destroyAll(Request $request) : JsonResponse {
+        $files = File::where('user_id', Auth::id())->get();
+
+        foreach ($files as $file) {
+            $share = Share::where('file_id', $file->id)->first();
+
+            if ($share) {
+                Storage::delete($share->file_path);
+            }
+            Storage::delete($file->path);
+
+            History::create([
+                'itemId' => $file->id,
+                'item_type' => 'file',
+                'userId' => Auth::id(),
+            ]);
+
+            File::destroy($file->id);
+        }
+
+        return response()->json([
+            'message' => 'All files deleted.'
         ]);
     }
 

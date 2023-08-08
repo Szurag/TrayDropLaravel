@@ -11,6 +11,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/{id}', [FileController::class, 'show']);
         Route::get('/{id}/download', [FileController::class, 'download']);
         Route::get('/{id}/edit', [FileController::class, 'edit']);
+        Route::delete('/all', [FileController::class, 'destroyAll']);
         Route::delete('/{id}', [FileController::class, 'destroy']);
     });
 });
