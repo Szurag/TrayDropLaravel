@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -102,54 +103,85 @@ class FileController extends Controller
             ]);
         }
 
+        Redis::set("user_change:" . Auth::id(), true);
+
         return response()->json([
             'message' => 'File uploaded successfully.',
             'file' => $file
         ], 201);
     }
 
-    public function updates(Request $request) : JsonResponse {
-        $timeout = 90;
-        $lastFileId = File::where('user_id', Auth::id())->max('id');
-        $lastHistoryFileId = History::where('userId', Auth::id())->where('item_type', 'file')->orderBy('id', 'desc')->first();
+//    public function updates(Request $request) : JsonResponse {
+//        $timeout = 90;
+//        $lastFileId = File::where('user_id', Auth::id())->max('id');
+//        $lastHistoryFileId = History::where('userId', Auth::id())->where('item_type', 'file')->orderBy('id', 'desc')->first();
+//
+//        if ($lastFileId === null)
+//            $lastFileId = 0;
+//
+//        if ($lastHistoryFileId === null)
+//            $lastHistoryFileId = 0;
+//        else
+//            $lastHistoryFileId = $lastHistoryFileId->id;
+//
+//        $startTime = time();
+//        while (time() - $startTime < $timeout) {
+//            $newFiles = File::where('user_id', Auth::id())
+//                ->where('id', '>', $lastFileId)
+//                ->orderBy('id', 'desc')
+//                ->limit(3)
+//                ->get();
+//
+//            if ($newFiles->count() > 0) {
+//                return response()->json($newFiles);
+//            }
+//
+//            $deletedFiles = History::where('userId', Auth::id())
+//                ->where('item_type', 'file')
+//                ->where('id', '>', $lastHistoryFileId)
+//                ->orderBy('id', 'desc')
+//                ->limit(3)
+//                ->get();
+//
+//            if ($deletedFiles->count() > 0) {
+//                return response()->json([
+//                    'deletedFiles' => $deletedFiles
+//                ]);
+//            }
+//
+//            usleep(500000); // 500ms
+//        }
+//
+//        return response()->json([], 204);
+//    }
 
-        if ($lastFileId === null)
-            $lastFileId = 0;
+    public function updates(Request $request)
+    {
+        $response = new \Symfony\Component\HttpFoundation\StreamedResponse(function() use ($request) {
+            while (true) {
 
-        if ($lastHistoryFileId === null)
-            $lastHistoryFileId = 0;
-        else
-            $lastHistoryFileId = $lastHistoryFileId->id;
+                $val = Redis::get("user_change:" . Auth::id());
+//                echo 'data: ' . json_encode(['message' => $val]) . "\n\n";
+//                ob_flush();
+//                flush();
 
-        $startTime = time();
-        while (time() - $startTime < $timeout) {
-            $newFiles = File::where('user_id', Auth::id())
-                ->where('id', '>', $lastFileId)
-                ->orderBy('id', 'desc')
-                ->limit(3)
-                ->get();
+                if ($val) {
+                    Redis::set("user_change:" . Auth::id(), false);
+                    echo 'data: ' . json_encode(['message' => 'update!']) . "\n\n";
+                    ob_flush();
+                    flush();
+                }
 
-            if ($newFiles->count() > 0) {
-                return response()->json($newFiles);
+                usleep(100000);
+
             }
+        });
 
-            $deletedFiles = History::where('userId', Auth::id())
-                ->where('item_type', 'file')
-                ->where('id', '>', $lastHistoryFileId)
-                ->orderBy('id', 'desc')
-                ->limit(3)
-                ->get();
+        $response->headers->set('Content-Type', 'text/event-stream');
+        $response->headers->set('X-Accel-Buffering', 'no');
+        $response->headers->set('Cach-Control', 'no-cache');
+        return $response;
 
-            if ($deletedFiles->count() > 0) {
-                return response()->json([
-                    'deletedFiles' => $deletedFiles
-                ]);
-            }
-
-            usleep(500000); // 500ms
-        }
-
-        return response()->json([], 204);
     }
 
     public function show(int $id) : JsonResponse {
@@ -245,7 +277,7 @@ class FileController extends Controller
         ]);
     }
 
-    public function destroy(int $id) : JsonResponse {
+    public function destroy(Request $request, int $id) : JsonResponse {
         $file = File::where('id', $id)->where('user_id', Auth::id())->first();
 
         if (! $file) {
@@ -259,6 +291,8 @@ class FileController extends Controller
         if ($share) {
             Storage::delete($share->file_path);
         }
+
+        Redis::set("user_change:" . Auth::id(), true);
 
         Storage::delete($file->path);
 
@@ -294,6 +328,8 @@ class FileController extends Controller
 
             File::destroy($file->id);
         }
+
+        Redis::set("user_change:" . Auth::id(), true);
 
         return response()->json([
             'message' => 'All files deleted.'
