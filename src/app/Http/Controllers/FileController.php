@@ -155,33 +155,25 @@ class FileController extends Controller
 //        return response()->json([], 204);
 //    }
 
-    public function updates(Request $request)
+    public function updates(Request $request) : JsonResponse
     {
-        $response = new \Symfony\Component\HttpFoundation\StreamedResponse(function() use ($request) {
-            while (true) {
+        $timeout = 120;
+        $startTime = time();
+        while (time() - $startTime < $timeout) {
 
-                $val = Redis::get("user_change:" . Auth::id());
-//                echo 'data: ' . json_encode(['message' => $val]) . "\n\n";
-//                ob_flush();
-//                flush();
+            $val = Redis::get("user_change:" . Auth::id());
 
-                if ($val) {
-                    Redis::set("user_change:" . Auth::id(), false);
-                    echo 'data: ' . json_encode(['message' => 'update!']) . "\n\n";
-                    ob_flush();
-                    flush();
-                }
-
-                usleep(100000);
-
+            if ($val) {
+                Redis::set("user_change:" . Auth::id(), false);
+                return response()->json([
+                    'message' => 'Update!'
+                ]);
             }
-        });
 
-        $response->headers->set('Content-Type', 'text/event-stream');
-        $response->headers->set('X-Accel-Buffering', 'no');
-        $response->headers->set('Cach-Control', 'no-cache');
-        return $response;
+            usleep(250000);
+        }
 
+        return response()->json([], 204);
     }
 
     public function show(int $id) : JsonResponse {
