@@ -45,9 +45,6 @@ class Kernel extends HttpKernel
 //            'throttle:2137,1',
             \App\Http\Middleware\Cors::class,
         ],
-        'test' => [
-            \App\Http\Middleware\AddSanctumTokenToHeaders::class,
-        ]
     ];
 
     /**

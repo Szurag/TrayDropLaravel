@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('clipboard', function (Blueprint $table) {
             $table->id();
-            $table->string('content');
+            $table->text('content');
             $table->string('device_type');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

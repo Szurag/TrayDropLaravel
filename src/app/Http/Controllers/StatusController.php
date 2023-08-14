@@ -14,4 +14,21 @@ class StatusController extends Controller
             'version' => '4.2.0'
         ]);
     }
+
+    public function disk() : array
+    {
+        $totalSpace = disk_total_space('/');
+        $freeSpace = disk_free_space('/');
+        $usedSpace = $totalSpace - $freeSpace;
+
+        $totalSpaceGB = round($totalSpace / (1000 * 1000 * 1000), 2);
+        $freeSpaceGB = round($freeSpace / (1000 * 1000 * 1000), 2);
+        $usedSpaceGB = round($usedSpace / (1000 * 1000 * 1000), 2);
+
+        return [
+            'total_space_gb' => $totalSpaceGB,
+            'free_space_gb' => $freeSpaceGB,
+            'used_space_gb' => $usedSpaceGB,
+        ];
+    }
 }
