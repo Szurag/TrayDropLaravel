@@ -2,7 +2,11 @@ FROM php:8.2-fpm
 
 RUN docker-php-ext-install pdo pdo_mysql sockets
 
-RUN apt install zip unzip php-zip
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    zip \
+    unzip \
+    php-zip && \
+    apt-get clean
 
 RUN pecl install redis \
     && docker-php-ext-enable redis
