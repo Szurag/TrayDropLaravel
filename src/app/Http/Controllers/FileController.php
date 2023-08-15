@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\HashCrypt;
 use App\Models\File;
 use App\Models\History;
 use App\Models\Share;
@@ -41,17 +42,18 @@ class FileController extends Controller
     }
 
     public function store(Request $request) : JsonResponse {
-        if (Auth::user()->encrypt_files) {
-            $request->validate([
-                'file' => 'required',
-                'password' => 'required'
-            ]);
+        $request->validate([
+            'file' => 'required',
+            'password' => 'required'
+        ]);
 
-            if (!Hash::check(base64_decode($request->input('password')), Auth::user()->password )) {
-                return response()->json([
-                    'message' => 'Invalid password.'
-                ], 400);
-            }
+        if (!Hash::check(base64_decode($request->input('password')), Auth::user()->password )) {
+            return response()->json([
+                'message' => 'Invalid password.'
+            ], 400);
+        }
+
+        if (filter_var(HashCrypt::decryptText(Auth::user()->encrypt_files, base64_decode($request->input('password'))), FILTER_VALIDATE_BOOLEAN)) {
 
             $file = $request->file('file');
             $password = base64_decode($request->input('password'));
@@ -82,9 +84,6 @@ class FileController extends Controller
 
 
         } else {
-            $request->validate([
-                'file' => 'required'
-            ]);
 
             $file = $request->file('file');
 
@@ -111,53 +110,9 @@ class FileController extends Controller
         ], 201);
     }
 
-//    public function updates(Request $request) : JsonResponse {
-//        $timeout = 90;
-//        $lastFileId = File::where('user_id', Auth::id())->max('id');
-//        $lastHistoryFileId = History::where('userId', Auth::id())->where('item_type', 'file')->orderBy('id', 'desc')->first();
-//
-//        if ($lastFileId === null)
-//            $lastFileId = 0;
-//
-//        if ($lastHistoryFileId === null)
-//            $lastHistoryFileId = 0;
-//        else
-//            $lastHistoryFileId = $lastHistoryFileId->id;
-//
-//        $startTime = time();
-//        while (time() - $startTime < $timeout) {
-//            $newFiles = File::where('user_id', Auth::id())
-//                ->where('id', '>', $lastFileId)
-//                ->orderBy('id', 'desc')
-//                ->limit(3)
-//                ->get();
-//
-//            if ($newFiles->count() > 0) {
-//                return response()->json($newFiles);
-//            }
-//
-//            $deletedFiles = History::where('userId', Auth::id())
-//                ->where('item_type', 'file')
-//                ->where('id', '>', $lastHistoryFileId)
-//                ->orderBy('id', 'desc')
-//                ->limit(3)
-//                ->get();
-//
-//            if ($deletedFiles->count() > 0) {
-//                return response()->json([
-//                    'deletedFiles' => $deletedFiles
-//                ]);
-//            }
-//
-//            usleep(500000); // 500ms
-//        }
-//
-//        return response()->json([], 204);
-//    }
-
     public function updates(Request $request) : JsonResponse
     {
-        $timeout = 120;
+        $timeout = 80;
         $startTime = time();
         while (time() - $startTime < $timeout) {
 
@@ -193,22 +148,21 @@ class FileController extends Controller
 
     public function download(Request $request, int $id): \Illuminate\Foundation\Application|\Illuminate\Http\Response|JsonResponse|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        // Nie wiem jaki tu response dać ( : )
+        // Nie wiem jaki tu response dać :(
 
-        if (Auth::user()->encrypt_files) {
+        $request->validate([
+            'password' => 'required'
+        ]);
 
-            $request->validate([
-                'password' => 'required'
-            ]);
+        $password = base64_decode($request->input('password'));
 
+        if (Hash::check($password, Auth::user()->password ) === false) {
+            return response()->json([
+                'message' => 'Invalid password.'
+            ], 400);
+        }
 
-            $password = base64_decode($request->input('password'));
-
-            if (Hash::check($password, Auth::user()->password ) === false) {
-                return response()->json([
-                    'message' => 'Invalid password.'
-                ], 400);
-            }
+        if (filter_var(HashCrypt::decryptText(Auth::user()->encrypt_files, base64_decode($request->input('password'))), FILTER_VALIDATE_BOOLEAN)) {
 
             $file = File::where('id', $id)->where('user_id', Auth::id())->first();
 
