@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('encrypt_files')->default(true);
+            $table->string('encrypt_files');
             $table->rememberToken();
             $table->timestamps();
         });

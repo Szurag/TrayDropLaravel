@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 
 class ClipboardController extends Controller
 {
@@ -75,50 +76,29 @@ class ClipboardController extends Controller
             'user_id' => Auth::id()
         ]);
 
+        Redis::set("user_clipboard_change:" . Auth::id(), true);
+
         return response()->json([
             'result' => $clipboard
         ]);
     }
 
-    public function updates(Request $request) : JsonResponse {
-        $timeout = 90;
-        $lastClipId = Clipboard::where('user_id', Auth::id())->max('id');
-        $lastHistoryClipId = History::where('userId', Auth::id())->where('item_type', 'clip')->orderBy('id', 'desc')->first();
-
-        if ($lastClipId === null)
-            $lastClipId = 0;
-
-        if ($lastHistoryClipId === null)
-            $lastHistoryClipId = 0;
-        else
-            $lastHistoryClipId = $lastHistoryClipId->id;
-
+    public function updates(Request $request) : JsonResponse
+    {
+        $timeout = 80;
         $startTime = time();
         while (time() - $startTime < $timeout) {
-            $newClips = Clipboard::where('user_id', Auth::id())
-                ->where('id', '>', $lastClipId)
-                ->orderBy('id', 'desc')
-                ->limit(3)
-                ->get();
 
-            if ($newClips->count() > 0) {
-                return response()->json($newClips);
-            }
+            $val = Redis::get("user_clipboard_change:" . Auth::id());
 
-            $deletedClips = History::where('userId', Auth::id())
-                ->where('item_type', 'clip')
-                ->where('id', '>', $lastHistoryClipId)
-                ->orderBy('id', 'desc')
-                ->limit(3)
-                ->get();
-
-            if ($deletedClips->count() > 0) {
+            if ($val) {
+                Redis::set("user_clipboard_change:" . Auth::id(), false);
                 return response()->json([
-                    'deletedClips' => $deletedClips
+                    'message' => 'Update!'
                 ]);
             }
 
-            usleep(500000); // 500ms
+            usleep(250000);
         }
 
         return response()->json([], 204);
@@ -142,6 +122,8 @@ class ClipboardController extends Controller
 
         Clipboard::destroy($id);
 
+        Redis::set("user_clipboard_change:" . Auth::id(), true);
+
         return response()->json([
             'message' => 'Clipboard item deleted.'
         ]);
@@ -161,6 +143,8 @@ class ClipboardController extends Controller
         }
 
         Clipboard::where('user_id', Auth::id())->delete();
+
+        Redis::set("user_clipboard_change:" . Auth::id(), true);
 
         return response()->json([
             'message' => 'Clipboard items deleted.'
