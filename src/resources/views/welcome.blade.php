@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="pl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pusher Test</title>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
 
-    <title>TrayDrop!</title>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
 
+        var pusher = new Pusher('9c026e72b56f8316ed63', {
+            cluster: 'eu',
+            channelAuthorization: {
+                'endpoint': '/broadcasting/auth',
+                headers: {
+                    'Authorization': 'Bearer 1|P078CEs1XSu2bd0hmLMw1kR3bTqc44fa4FLx39tI'
+                }
+            },
+        });
+
+        var channel = pusher.subscribe('private-updates.1');
+        channel.bind('files.clipboard.updated', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script>
 </head>
 <body>
-<h1>TrayDrop!</h1>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    const token = "5|C90MaccVt1pEBWtKNh9nrHVab15Dj7dnCsiEkJrj";
-    const evtSource = new EventSource(`/api/files/updates?_token=${token}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-
-    evtSource.onmessage = (event) => {
-        console.log(event.data);
-    }
-
-</script>
+<h1>Pusher Test</h1>
+<p>
+    Try publishing an event to channel <code>my-channel</code>
+    with event name <code>my-event</code>.
+</p>
 </body>
 </html>
+

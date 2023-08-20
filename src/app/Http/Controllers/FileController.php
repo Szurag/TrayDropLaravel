@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\FilesClipboardUpdated;
 use App\Helpers\HashCrypt;
 use App\Models\File;
 use App\Models\History;
@@ -103,6 +104,7 @@ class FileController extends Controller
         }
 
         Redis::set("user_change:" . Auth::id(), true);
+        event(new FilesClipboardUpdated(Auth::id(), "files"));
 
         return response()->json([
             'message' => 'File uploaded successfully.',
@@ -249,6 +251,7 @@ class FileController extends Controller
         ]);
 
         File::destroy($id);
+        event(new FilesClipboardUpdated(Auth::id(), "files"));
 
         return response()->json([
             'message' => 'File deleted.'
@@ -276,6 +279,7 @@ class FileController extends Controller
         }
 
         Redis::set("user_change:" . Auth::id(), true);
+        event(new FilesClipboardUpdated(Auth::id(), "files"));
 
         return response()->json([
             'message' => 'All files deleted.'
