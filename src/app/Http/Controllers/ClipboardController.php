@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\FilesClipboardUpdated;
 use App\Helpers\HashCrypt;
 use App\Models\Clipboard;
 use App\Models\History;
@@ -38,7 +39,7 @@ class ClipboardController extends Controller
 
         $clipboards = [];
 
-        foreach (Clipboard::where('user_id', Auth::id())->get() as $clipboard) {
+        foreach (Clipboard::where('user_id', Auth::id())->paginate($request->input('per_page', 10)) as $clipboard) {
             $clipboard->content = HashCrypt::decryptText($clipboard->content, $request->input('password'));
             $clipboards[] = $clipboard;
         }
@@ -77,6 +78,7 @@ class ClipboardController extends Controller
         ]);
 
         Redis::set("user_clipboard_change:" . Auth::id(), true);
+        event(new FilesClipboardUpdated(Auth::id(), "clipboard"));
 
         return response()->json([
             'result' => $clipboard
@@ -122,6 +124,7 @@ class ClipboardController extends Controller
 
         Clipboard::destroy($id);
 
+        event(new FilesClipboardUpdated(Auth::id(), "clipboard"));
         Redis::set("user_clipboard_change:" . Auth::id(), true);
 
         return response()->json([
@@ -143,7 +146,7 @@ class ClipboardController extends Controller
         }
 
         Clipboard::where('user_id', Auth::id())->delete();
-
+        event(new FilesClipboardUpdated(Auth::id(), "clipboard"));
         Redis::set("user_clipboard_change:" . Auth::id(), true);
 
         return response()->json([
