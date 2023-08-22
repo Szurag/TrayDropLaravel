@@ -11,7 +11,9 @@ class StatusController extends Controller
             'status' => 'OK',
             'message' => 'API is working',
             'hello' => "I am TrayDrop API developed by Szurag. Special thanks to Onhq11.",
-            'version' => '4.2.0'
+            'version' => '4.2.0',
+            'app_key' => env("PUSHER_APP_KEY"),
+            'cluster' => env("PUSHER_APP_CLUSTER"),
         ]);
     }
 
