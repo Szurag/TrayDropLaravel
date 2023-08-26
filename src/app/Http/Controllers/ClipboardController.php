@@ -39,7 +39,7 @@ class ClipboardController extends Controller
 
         $clipboards = [];
 
-        foreach (Clipboard::where('user_id', Auth::id())->get() as $clipboard) {
+        foreach (Clipboard::where('user_id', Auth::id())->paginate($request->input('per_page', 10)) as $clipboard) {
             $clipboard->content = HashCrypt::decryptText($clipboard->content, $request->input('password'));
             $clipboards[] = $clipboard;
         }
