@@ -34,10 +34,6 @@ services:
       MARIADB_USER: 'tray'
       MARIADB_PASSWORD: 'password'
       MARIADB_ROOT_PASSWORD: 'secret'
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mariadb
-    networks:
-      - laravel
 
 
   php:

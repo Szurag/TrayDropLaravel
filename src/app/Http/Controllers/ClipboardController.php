@@ -37,20 +37,19 @@ class ClipboardController extends Controller
             ], 400);
         }
 
-        $clipboards = [];
-
-        foreach (Clipboard::where('user_id', Auth::id())->paginate($request->input('per_page', 10)) as $clipboard) {
-            $clipboard->content = HashCrypt::decryptText($clipboard->content, $request->input('password'));
-            $clipboards[] = $clipboard;
-        }
-
-        if (count($clipboards) === 0) {
-            return response()->json([], 204);
-        }
-
         if ($request->input('order_by') === "desc") {
-            $clipboards = array_reverse($clipboards);
+            $clipboards = Clipboard::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate($request->input('per_page', 10));
+        } else {
+            $clipboards = Clipboard::where('user_id', Auth::id())->orderBy('id', 'asc')->paginate($request->input('per_page', 10));
         }
+
+        $data = $clipboards->getCollection();
+
+        foreach ($data as &$item) {
+            $item->content = HashCrypt::decryptText($item->content, $request->input('password'));
+        }
+
+        $clipboards->setCollection($data);
 
         return response()->json($clipboards);
     }
