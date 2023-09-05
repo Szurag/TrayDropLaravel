@@ -1,0 +1,102 @@
+{
+    "setup": {
+        "welcome_message": "Witaj w konfiguracji Traydrop",
+        "server_address": "Adres serwera",
+        "change_server": "Zmień serwer",
+        "login": "Zaloguj się",
+        "register": "Zarejestruj się",
+        "encrypt_files": "Zaszyfruj pliki (rekomendowane)"
+    },
+    "errors": {
+        "field_required": "Pole jest wymagane",
+        "failed_to_authenticate": "Nie udało się uwierzytelnić",
+        "failed_to_register": "Nie udało się zarejestrować",
+        "passwords_not_the_same": "Hasła nie są identyczne",
+        "network_error": "Błąd sieci, następna próba w ciągu 15 sekund",
+        "main_choosen": "Połączono: Serwer główny",
+        "alt_choosen": "Połączono: Serwer alternatywny",
+        "servers_unreachable": "Wszystkie serwery są nie osiągalne, spróbuj ponownie później",
+        "canceled_upload": "Pomyślnie anulowano wysyłanie",
+        "canceled_download": "Pomyślnie anulowano pobieranie"
+    },
+    "name": "Nazwa",
+    "email": "E-mail",
+    "password": "Hasło",
+    "password_confirmation": "Potwierdzenie hasła",
+    "login": "Zaloguj",
+    "register": "Zarejestruj",
+    "clipboard": {
+        "main": "Schowek",
+        "sent": "Pomyślnie wysłano schowek na serwer",
+        "remove": "Usuń schowek",
+        "remove_confirmation": "Czy na pewno chcesz usunąć <strong>{{content}}</strong> ze schowka?",
+        "no_results": "Wklej zawartość schowka (Ctrl+V)",
+        "empty": "Schowek jest pusty",
+        "deleted": "Pomyślnie usunięto schowek z serwera"
+    },
+    "files": {
+        "main": "Pliki",
+        "get": "Pomyślnie pobrano plik",
+        "sent": "Pomyślnie wysłano plik na serwer",
+        "remove": "Usuń plik",
+        "remove_confirmation": "Czy na pewno chcesz usunąć plik <strong>{{content}}</strong>?",
+        "no_results": "Przeciągnij i upuść pliki, aby przesłać na serwer",
+        "drop_files": "Upuść pliki tutaj",
+        "deleted": "Pomyślnie usunięto plik z serwera",
+        "download_started": "Rozpoczęto pobieranie pliku",
+        "upload_started": "Rozpoczęto przesyłanie pliku",
+        "downloaded": "Pomyślnie pobrano plik z serwera",
+        "added_to_queue": "Plik został dodany do kolejki",
+        "uploading": "Wysyłanie",
+        "downloading": "Pobieranie",
+        "share": {
+            "share": "Udostępnij plik: <strong>{{content}}</strong>",
+            "date": "Termin ważności",
+            "shared": "Pomyślnie udostępniono plik",
+            "shared_file": "Udostępniony plik",
+            "link": "URL Pliku",
+            "copied": "Pomyślnie skopiowano URL do schowka"
+        },
+        "clipboard_upload": "Przesyłwanie pliku ze schowka",
+        "filename": "Nazwa pliku"
+    },
+    "profile": {
+        "main": "Profil"
+    },
+    "settings": {
+        "hostname_alt_setup": "Ustaw alternatywny adres",
+        "hostname_alt": "Alternatywny adres",
+        "hostname_alt_success": "Pomyślnie ustawiono alternatywny adres serwera"
+    },
+    "all": {
+        "clipboard": {
+            "remove_confirmation": "Czy na pewno chcesz usunąć <strong>wszystkie</strong> schowki?"
+        },
+        "files": {
+            "remove_confirmation": "Czy na pewno chcesz usunąć <strong>wszystkie</strong> pliki?"
+        }
+    },
+    "menu": "Menu",
+    "cancel": "Anuluj",
+    "remove": "Usuń",
+    "copy": "Kopiuj",
+    "download": "Pobierz",
+    "remove_all": "Usuń wszystkie",
+    "upload": "Prześlij",
+    "paste": "Wklej",
+    "downloading": "Pobieranie",
+    "copied": "Skopiowano",
+    "queued": "W kolejce",
+    "downloaded": "Pobrano",
+    "canceled": "Anulowano",
+    "share": "Udostępnij",
+    "logout": "Wyloguj",
+    "change_language": "Zmień język",
+    "save": "Zapisz",
+    "main_server": "Serwer główny",
+    "alt_server": "Serwer alternatywny",
+    "server_disk": "Dysk serwerowy",
+    "available_of": "dostępne z",
+    "close": "Zamknij",
+    "continue": "Kontynuuj"
+}
