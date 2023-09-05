@@ -1,0 +1,102 @@
+{
+    "setup": {
+        "welcome_message": "Welcome to Traydrop setup",
+        "server_address": "Server address",
+        "change_server": "Change server",
+        "login": "Login",
+        "register": "Register",
+        "encrypt_files": "Encrypt files (recomended)"
+    },
+    "errors": {
+        "field_required": "Field is required",
+        "failed_to_authenticate": "Failed to authenticate",
+        "failed_to_register": "Failed to register",
+        "passwords_not_the_same": "Passwords are not the same",
+        "network_error": "Network error, next try in 15 seconds",
+        "main_choosen": "Connected: Main server",
+        "alt_choosen": "Connected: Alternative server",
+        "servers_unreachable": "All servers are unreachable, please try again later",
+        "canceled_upload": "Successfully canceled upload",
+        "canceled_download": "Successfully canceled download"
+    },
+    "name": "Name",
+    "email": "E-mail",
+    "password": "Password",
+    "password_confirmation": "Password confirmation",
+    "login": "Log in",
+    "register": "Register",
+    "clipboard": {
+        "main": "Clipboard",
+        "sent": "Successfully sent clipboard to server",
+        "remove": "Remove clipboard",
+        "remove_confirmation": "Are you sure you want to delete <strong>{{content}}</strong> from clipboard?",
+        "no_results": "Paste clipboard content (Ctrl+V)",
+        "empty": "Clipboard content is empty",
+        "deleted": "Successfully deleted clipboard from server"
+    },
+    "files": {
+        "main": "Files",
+        "get": "Successfully downloaded file",
+        "sent": "Successfully sent file to server",
+        "remove": "Remove file",
+        "remove_confirmation": "Are you sure you want to delete file <strong>{{content}}</strong>?",
+        "no_results": "Drag and drop files to upload to server",
+        "drop_files": "Drop files here",
+        "deleted": "Successfully deleted file from server",
+        "download_started": "File download started",
+        "upload_started": "File upload started",
+        "downloaded": "Successfully downloaded file from server",
+        "added_to_queue": "File added to queue",
+        "uploading": "Uploading",
+        "downloading": "Downloading",
+        "share": {
+            "share": "Share file: <strong>{{content}}</strong>",
+            "date": "Expiration date",
+            "shared": "Successfully shared file",
+            "shared_file": "Shared file",
+            "link": "File URL",
+            "copied": "Successfully copied URL to clipboard"
+        },
+        "clipboard_upload": "Uploading file from clipboard",
+        "filename": "Filename"
+    },
+    "profile": {
+        "main": "Profile"
+    },
+    "settings": {
+        "hostname_alt_setup": "Set alternative hostname",
+        "hostname_alt": "Alternative hostname",
+        "hostname_alt_success": "Successfully set alternative hostname"
+    },
+    "all": {
+        "clipboard": {
+            "remove_confirmation": "Are you sure you want to delete <strong>all</strong> clipboards?"
+        },
+        "files": {
+            "remove_confirmation": "Are you sure you want to delete <strong>all</strong> files?"
+        }
+    },
+    "menu": "Menu",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "copy": "Copy",
+    "download": "Download",
+    "remove_all": "Remove all",
+    "upload": "Upload",
+    "paste": "Paste",
+    "downloading": "Downloading",
+    "copied": "Copied",
+    "queued": "Queued",
+    "downloaded": "Downloaded",
+    "canceled": "Canceled",
+    "share": "Share",
+    "logout": "Log out",
+    "change_language": "Change language",
+    "save": "Save",
+    "main_server": "Main server",
+    "alt_server": "Alternative server",
+    "server_disk": "Server disk",
+    "available_of": "available of",
+    "close": "Close",
+    "continue": "Continue"
+}
