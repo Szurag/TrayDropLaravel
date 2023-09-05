@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Traydrop!</title>
+        <title>Traydrop</title>
 
         @viteReactRefresh
-        @vite('resources/js/index.jsx')
+        @vite('resources/index.jsx')
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
