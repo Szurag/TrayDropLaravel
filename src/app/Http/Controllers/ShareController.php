@@ -24,9 +24,9 @@ class ShareController extends Controller
         }
 
         if ($request->input('order_by') === "desc") {
-            $shares = Share::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate($request->input('per_page', 10));
+            $shares = Share::with('file')->where('user_id', Auth::id())->orderBy('id', 'desc')->paginate($request->input('per_page', 10));
         } else {
-            $shares = Share::where('user_id', Auth::id())->paginate($request->input('per_page', 10));
+            $shares = Share::with('file')->where('user_id', Auth::id())->paginate($request->input('per_page', 10));
         }
 
         return response()->json($shares);
