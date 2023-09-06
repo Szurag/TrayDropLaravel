@@ -34,6 +34,8 @@ services:
       MARIADB_USER: 'tray'
       MARIADB_PASSWORD: 'password'
       MARIADB_ROOT_PASSWORD: 'secret'
+    networks:
+      - laravel
 
 
   php:

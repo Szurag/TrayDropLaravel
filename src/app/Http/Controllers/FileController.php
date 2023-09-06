@@ -104,7 +104,11 @@ class FileController extends Controller
         }
 
         Redis::set("user_change:" . Auth::id(), true);
-        event(new FilesClipboardUpdated(Auth::id(), "files"));
+        event(new FilesClipboardUpdated(
+            Auth::id(),
+            "files",
+            "created"
+        ));
 
         return response()->json([
             'message' => 'File uploaded successfully.',
@@ -251,7 +255,11 @@ class FileController extends Controller
         ]);
 
         File::destroy($id);
-        event(new FilesClipboardUpdated(Auth::id(), "files"));
+        event(new FilesClipboardUpdated(
+            Auth::id(),
+            "files",
+            "deleted"
+        ));
 
         return response()->json([
             'message' => 'File deleted.'
@@ -279,7 +287,11 @@ class FileController extends Controller
         }
 
         Redis::set("user_change:" . Auth::id(), true);
-        event(new FilesClipboardUpdated(Auth::id(), "files"));
+        event(new FilesClipboardUpdated(
+            Auth::id(),
+            "files",
+            "deleted"
+        ));
 
         return response()->json([
             'message' => 'All files deleted.'

@@ -17,12 +17,20 @@ class FilesClipboardUpdated implements ShouldBroadcast
 
     public int $userId;
     public string $message;
+    public string $type;
 
-    public function __construct(int $userId, string $message)
+    /**
+     * @param int $userId
+     * @param string $message
+     * @param string $type
+     */
+    public function __construct(int $userId, string $message, string $type)
     {
         $this->userId = $userId;
         $this->message = $message;
+        $this->type = $type;
     }
+
 
     public function broadcastOn(): array
     {
