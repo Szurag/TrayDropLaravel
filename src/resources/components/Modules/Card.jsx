@@ -20,7 +20,6 @@ export default function Card({
 }) {
     const [t] = useTranslation();
     const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
     return (
         <Box
@@ -108,7 +107,7 @@ export default function Card({
                                 variant="outlined"
                                 startIcon={<Icon icon={"ph:clipboard"} />}
                                 onClick={() =>
-                                    onConfirm(data.content, data.index)
+                                    onConfirm(data.copyContent, data.index)
                                 }
                                 sx={{ width: { xs: "100%", sm: "auto" } }}
                             >

@@ -343,6 +343,7 @@ export default function Clipboard({ passwd, updateData }) {
                                     data={{
                                         index: itemIndex,
                                         content: item.content,
+                                        copyContent: item.content,
                                         date: new Date(item.created_at)
                                             .toLocaleString(i18n.language, {
                                                 year: "numeric",

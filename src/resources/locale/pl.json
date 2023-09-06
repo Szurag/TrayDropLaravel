@@ -55,10 +55,17 @@
             "shared": "Pomyślnie udostępniono plik",
             "shared_file": "Udostępniony plik",
             "link": "URL Pliku",
-            "copied": "Pomyślnie skopiowano URL do schowka"
+            "copied": "Pomyślnie skopiowano URL do schowka",
+            "shared_list": "Lista udostępnionych plików",
+            "deleted": "Pomyślnie wyłączono udostępnianie pliku"
         },
         "clipboard_upload": "Przesyłwanie pliku ze schowka",
         "filename": "Nazwa pliku"
+    },
+    "share": {
+        "no_results": "Brak wyników",
+        "remove": "Wyłącz udostępnianie pliku",
+        "remove_confirmation": "Czy na pewno chcesz wyłączyć udostępnianie pliku     <strong>{{content}}</strong>?"
     },
     "profile": {
         "main": "Profil"

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
@@ -10,6 +10,12 @@ class Share extends Model
     use HasFactory;
 
     protected $table = "share";
+
+
+    public function file(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(File::class, 'file_id');
+    }
 
     protected $fillable = [
         'user_id',

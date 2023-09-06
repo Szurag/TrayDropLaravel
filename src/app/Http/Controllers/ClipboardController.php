@@ -77,7 +77,11 @@ class ClipboardController extends Controller
         ]);
 
         Redis::set("user_clipboard_change:" . Auth::id(), true);
-        event(new FilesClipboardUpdated(Auth::id(), "clipboard"));
+        event(new FilesClipboardUpdated(
+            Auth::id(),
+            "clipboard",
+            "created"
+        ));
 
         return response()->json([
             'result' => $clipboard
@@ -123,7 +127,11 @@ class ClipboardController extends Controller
 
         Clipboard::destroy($id);
 
-        event(new FilesClipboardUpdated(Auth::id(), "clipboard"));
+        event(new FilesClipboardUpdated(
+            Auth::id(),
+            "clipboard",
+            "destroyed"
+        ));
         Redis::set("user_clipboard_change:" . Auth::id(), true);
 
         return response()->json([
@@ -145,7 +153,11 @@ class ClipboardController extends Controller
         }
 
         Clipboard::where('user_id', Auth::id())->delete();
-        event(new FilesClipboardUpdated(Auth::id(), "clipboard"));
+        event(new FilesClipboardUpdated(
+            Auth::id(),
+            "clipboard",
+            "deleted"
+        ));
         Redis::set("user_clipboard_change:" . Auth::id(), true);
 
         return response()->json([
