@@ -6,7 +6,7 @@ import Files from "./Files";
 import Clipboard from "./Clipboard";
 import Profile from "./Profile";
 
-export default function Mobile({ passwd, updateData }) {
+export default function Mobile({ passwd, updateData, triggerReRenderShared, reRenderShared }) {
     const [t] = useTranslation();
     const [value, setValue] = useState(0);
     const [body, setBody] = useState([]);
@@ -14,7 +14,7 @@ export default function Mobile({ passwd, updateData }) {
     useEffect(() => {
         switch (value) {
             case 0:
-                setBody(<Files passwd={passwd} updateData={updateData} />);
+                setBody(<Files passwd={passwd} updateData={updateData} triggerReRenderShared={triggerReRenderShared} />);
                 break;
 
             case 1:
@@ -22,11 +22,11 @@ export default function Mobile({ passwd, updateData }) {
                 break;
 
             case 2:
-                setBody(<Profile />);
+                setBody(<Profile updateData={updateData} reRenderShared={reRenderShared} />);
                 break;
 
             default: {
-                setBody(<Files passwd={passwd} updateData={updateData} />);
+                setBody(<Files passwd={passwd} updateData={updateData} triggerReRenderShared={triggerReRenderShared} />);
             }
         }
     }, [value, updateData]);

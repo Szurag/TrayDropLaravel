@@ -141,3 +141,45 @@ export const filesShare = (data, callback) => {
             callback(null, error);
         });
 };
+
+export const filesSharedList = (callback) => {
+  axios
+    .get(`${localStorage.getItem("hostname")}/api/share`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((response) => callback(response))
+    .catch((error) => {
+      if (
+        error.response?.status === 401 ||
+        error.response?.status === 403
+      ) {
+        localStorage.setItem("token", "");
+        localStorage.setItem("_gqwexvcfq", "");
+        window.location.reload();
+      }
+      callback(null, error);
+    });
+};
+
+export const filesSharedDelete = (id, callback) => {
+  axios
+    .delete(`${localStorage.getItem("hostname")}/api/share/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((response) => callback(response))
+    .catch((error) => {
+      if (
+        error.response?.status === 401 ||
+        error.response?.status === 403
+      ) {
+        localStorage.setItem("token", "");
+        localStorage.setItem("_gqwexvcfq", "");
+        window.location.reload();
+      }
+      callback(null, error);
+    });
+};

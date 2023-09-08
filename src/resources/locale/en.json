@@ -55,10 +55,17 @@
             "shared": "Successfully shared file",
             "shared_file": "Shared file",
             "link": "File URL",
-            "copied": "Successfully copied URL to clipboard"
+            "copied": "Successfully copied URL to clipboard",
+            "shared_list": "Shared files list",
+            "deleted": "Successfuly unshared file"
         },
         "clipboard_upload": "Uploading file from clipboard",
         "filename": "Filename"
+    },
+    "share": {
+        "no_results": "No results",
+        "remove": "Unshare file",
+        "remove_confirmation": "Are you sure you want to unshare file <strong>{{content}}</strong>?"
     },
     "profile": {
         "main": "Profile"
