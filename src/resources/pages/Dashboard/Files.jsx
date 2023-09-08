@@ -32,7 +32,7 @@ import InfoModal from "../../components/Modules/Modals/InfoModal";
 import axios from "axios";
 import UploadModal from "../../components/Modules/Modals/UploadModal";
 
-export default function Files({ passwd, updateData }) {
+export default function Files({ passwd, updateData, triggerReRenderShared }) {
     const { i18n, t } = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -398,6 +398,7 @@ export default function Files({ passwd, updateData }) {
             }
 
             if (response) {
+                triggerReRenderShared()
                 handleSnackbarOpen(
                     "success",
                     t("main:files.share.shared") + ": " + data.fileName,

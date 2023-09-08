@@ -21,7 +21,7 @@ import { useTheme } from "@mui/material";
 export default function Setup() {
     const { i18n, t } = useTranslation();
     const [serverAddressField, setServerAddressField] = useState(
-        "https://api.traydrop.pl",
+        "https://traydrop.pl",
     );
     const serverAddress = useDebounceEffect(serverAddressField, 500);
     const [isServerLoading, setIsServerLoading] = useState(false);

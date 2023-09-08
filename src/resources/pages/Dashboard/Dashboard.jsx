@@ -19,6 +19,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("xl"));
     const [updateData, setUpdateData] = useState({});
+    const [reRenderShared, setReRenderShared] = useState(false)
 
     const notificationSound = new Howl({
         src: [notification],
@@ -43,6 +44,10 @@ export default function Dashboard() {
 
         link.href = favicon;
     };
+
+    const triggerReRenderShared = () => {
+        setReRenderShared(!reRenderShared)
+    }
 
     useEffect(() => {
         if (!localStorage.getItem("hostname")?.length > 0) {
@@ -112,7 +117,8 @@ export default function Dashboard() {
                     <Mobile
                         passwd={passwd}
                         updateData={updateData}
-                        key={updateData}
+                        triggerReRenderShared={triggerReRenderShared}
+                        reRenderShared={reRenderShared}
                     />
                 )
             ) : (
@@ -128,16 +134,15 @@ export default function Dashboard() {
                 >
                     {!!passwd && (
                         <>
-                            <Profile />
+                            <Profile updateData={updateData} reRenderShared={reRenderShared} />
                             <Clipboard
                                 passwd={passwd}
                                 updateData={updateData}
-                                key={updateData}
                             />
                             <Files
                                 passwd={passwd}
                                 updateData={updateData}
-                                key={updateData}
+                                triggerReRenderShared={triggerReRenderShared}
                             />
                         </>
                     )}

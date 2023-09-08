@@ -10,8 +10,9 @@ import disk from "../../img/disk.png";
 import Bar from "../../components/Modules/Sensors/Bar";
 import axios from "axios";
 import BarLoading from "../../components/Modules/Sensors/BarLoading";
+import ShareList from "../../components/Modules/ShareList/ShareList.jsx";
 
-export default function Settings() {
+export default function Settings({updateData, reRenderShared}) {
     const { i18n, t } = useTranslation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -148,12 +149,11 @@ export default function Settings() {
                     sx={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: 3,
-                        justifyContent: "space-between",
+                        justifyContent: "end",
                         height: "100%",
                     }}
                 >
-                    <Box></Box>
+                    <ShareList updateData={updateData} reRenderShared={reRenderShared} sx={{mb: 2}}/>
                     {!diskLoading ? (
                         <Bar
                             isLoading={!diskSpace?.total}
