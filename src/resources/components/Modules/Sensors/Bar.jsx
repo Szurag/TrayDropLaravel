@@ -27,7 +27,7 @@ export default function Bar({ barValue, icon, label, value, description, sx }) {
         return (
             <Box sx={{ width: "100%", ...sx }}>
                 <Box sx={{ display: "flex", mx: 0.75, mb: 0.5 }}>
-                    <img src={icon} style={{ width: "22.5%" }} />
+                    <img src={icon} style={{ width: "60px" }} />
                     <Box
                         sx={{
                             ml: 1.5,

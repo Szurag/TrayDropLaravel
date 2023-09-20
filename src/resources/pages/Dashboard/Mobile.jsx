@@ -6,7 +6,12 @@ import Files from "./Files";
 import Clipboard from "./Clipboard";
 import Profile from "./Profile";
 
-export default function Mobile({ passwd, updateData, triggerReRenderShared, reRenderShared }) {
+export default function Mobile({
+    passwd,
+    updateData,
+    triggerReRenderShared,
+    reRenderShared,
+}) {
     const [t] = useTranslation();
     const [value, setValue] = useState(0);
     const [body, setBody] = useState([]);
@@ -14,7 +19,13 @@ export default function Mobile({ passwd, updateData, triggerReRenderShared, reRe
     useEffect(() => {
         switch (value) {
             case 0:
-                setBody(<Files passwd={passwd} updateData={updateData} triggerReRenderShared={triggerReRenderShared} />);
+                setBody(
+                    <Files
+                        passwd={passwd}
+                        updateData={updateData}
+                        triggerReRenderShared={triggerReRenderShared}
+                    />,
+                );
                 break;
 
             case 1:
@@ -22,18 +33,29 @@ export default function Mobile({ passwd, updateData, triggerReRenderShared, reRe
                 break;
 
             case 2:
-                setBody(<Profile updateData={updateData} reRenderShared={reRenderShared} />);
+                setBody(
+                    <Profile
+                        updateData={updateData}
+                        reRenderShared={reRenderShared}
+                    />,
+                );
                 break;
 
             default: {
-                setBody(<Files passwd={passwd} updateData={updateData} triggerReRenderShared={triggerReRenderShared} />);
+                setBody(
+                    <Files
+                        passwd={passwd}
+                        updateData={updateData}
+                        triggerReRenderShared={triggerReRenderShared}
+                    />,
+                );
             }
         }
     }, [value, updateData]);
 
     return (
         <>
-            <Box sx={{ p: 3, height: "93vh" }}>{body}</Box>
+            <Box sx={{ p: 3, height: "90vh" }}>{body}</Box>
             <BottomNavigation
                 showLabels
                 value={value}

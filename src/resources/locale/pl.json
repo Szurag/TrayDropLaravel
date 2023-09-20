@@ -56,19 +56,19 @@
             "shared_file": "Udostępniony plik",
             "link": "URL Pliku",
             "copied": "Pomyślnie skopiowano URL do schowka",
-            "shared_list": "Lista udostępnionych plików",
+            "shared_list": "Udostępnione",
             "deleted": "Pomyślnie wyłączono udostępnianie pliku"
         },
         "clipboard_upload": "Przesyłwanie pliku ze schowka",
         "filename": "Nazwa pliku"
     },
-    "share": {
-        "no_results": "Brak wyników",
+    "profile_share": {
+        "no_results": "Brak udostępnionych plików",
         "remove": "Wyłącz udostępnianie pliku",
         "remove_confirmation": "Czy na pewno chcesz wyłączyć udostępnianie pliku     <strong>{{content}}</strong>?"
     },
     "profile": {
-        "main": "Profil"
+        "main": "Udostępnianie"
     },
     "settings": {
         "hostname_alt_setup": "Ustaw alternatywny adres",
