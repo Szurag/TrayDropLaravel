@@ -132,48 +132,63 @@ export default function ShareList({ updateData, reRenderShared, ...props }) {
                 </Box>
             ) : (
                 <Box sx={{ px: 1, flex: 1 }}>
-                    {shared?.length > 0 ? (
-                        shared?.map((item, itemIndex) => (
-                            <Card
-                                key={itemIndex}
-                                type="clipboard"
-                                sx={{ mb: 2 }}
-                                icon={
-                                    <Icon
-                                        icon="ph:share"
-                                        style={{ fontSize: "22px" }}
+                    {shared?.length > 0 && total > 0 ? (
+                        shared?.map((item, itemIndex) => {
+                            if (
+                                !(new Date(item.expiration_date) > new Date())
+                            ) {
+                                setTotal(total - 1);
+                            }
+
+                            return (
+                                new Date(item.expiration_date) > new Date() && (
+                                    <Card
+                                        key={itemIndex}
+                                        type="clipboard"
+                                        sx={{ mb: 2 }}
+                                        icon={
+                                            <Icon
+                                                icon="ph:share"
+                                                style={{ fontSize: "22px" }}
+                                            />
+                                        }
+                                        data={{
+                                            index: itemIndex,
+                                            content: item.file?.original_name,
+                                            copyContent:
+                                                localStorage.getItem(
+                                                    "hostname",
+                                                ) +
+                                                "/api/share/" +
+                                                item.download_code,
+                                            date: new Date(item.expiration_date)
+                                                .toLocaleString(i18n.language, {
+                                                    year: "numeric",
+                                                    month: "2-digit",
+                                                    day: "2-digit",
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                    second: "2-digit",
+                                                    hour12: false,
+                                                })
+                                                .replace(",", ""),
+                                        }}
+                                        onConfirm={handleClipboardCopy}
+                                        buttonContent={
+                                            clipboardStatus[itemIndex]
+                                        }
+                                        handleOpenDeleteModal={() =>
+                                            handleOpenDeleteModal({
+                                                id: item.file.id,
+                                                fileName:
+                                                    item.file?.original_name,
+                                                type: "profile_share",
+                                            })
+                                        }
                                     />
-                                }
-                                data={{
-                                    index: itemIndex,
-                                    content: item.file?.original_name,
-                                    copyContent:
-                                        localStorage.getItem("hostname") +
-                                        "/api/share/" +
-                                        item.download_code,
-                                    date: new Date(item.expiration_date)
-                                        .toLocaleString(i18n.language, {
-                                            year: "numeric",
-                                            month: "2-digit",
-                                            day: "2-digit",
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                            second: "2-digit",
-                                            hour12: false,
-                                        })
-                                        .replace(",", ""),
-                                }}
-                                onConfirm={handleClipboardCopy}
-                                buttonContent={clipboardStatus[itemIndex]}
-                                handleOpenDeleteModal={() =>
-                                    handleOpenDeleteModal({
-                                        id: item.file.id,
-                                        fileName: item.file?.original_name,
-                                        type: "share",
-                                    })
-                                }
-                            />
-                        ))
+                                )
+                            );
+                        })
                     ) : (
                         <Typography
                             variant="h6"
