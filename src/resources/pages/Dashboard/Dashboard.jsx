@@ -19,7 +19,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("xl"));
     const [updateData, setUpdateData] = useState({});
-    const [reRenderShared, setReRenderShared] = useState(false)
+    const [reRenderShared, setReRenderShared] = useState(false);
 
     const notificationSound = new Howl({
         src: [notification],
@@ -46,8 +46,8 @@ export default function Dashboard() {
     };
 
     const triggerReRenderShared = () => {
-        setReRenderShared(!reRenderShared)
-    }
+        setReRenderShared(!reRenderShared);
+    };
 
     useEffect(() => {
         if (!localStorage.getItem("hostname")?.length > 0) {
@@ -102,10 +102,12 @@ export default function Dashboard() {
         );
 
         channel.bind("files.clipboard.updated", function (data) {
-            changeFavicon(true);
-            setTimeout(() => {
-                changeFavicon(false);
-            }, 3000);
+            if (data.type !== "deleted") {
+                changeFavicon(true);
+                setTimeout(() => {
+                    changeFavicon(false);
+                }, 3000);
+            }
             setUpdateData(data);
         });
     }, []);
@@ -134,7 +136,10 @@ export default function Dashboard() {
                 >
                     {!!passwd && (
                         <>
-                            <Profile updateData={updateData} reRenderShared={reRenderShared} />
+                            <Profile
+                                updateData={updateData}
+                                reRenderShared={reRenderShared}
+                            />
                             <Clipboard
                                 passwd={passwd}
                                 updateData={updateData}

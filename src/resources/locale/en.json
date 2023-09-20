@@ -56,19 +56,19 @@
             "shared_file": "Shared file",
             "link": "File URL",
             "copied": "Successfully copied URL to clipboard",
-            "shared_list": "Shared files list",
+            "shared_list": "Shared",
             "deleted": "Successfuly unshared file"
         },
         "clipboard_upload": "Uploading file from clipboard",
         "filename": "Filename"
     },
-    "share": {
-        "no_results": "No results",
+    "profile_share": {
+        "no_results": "No shared files",
         "remove": "Unshare file",
         "remove_confirmation": "Are you sure you want to unshare file <strong>{{content}}</strong>?"
     },
     "profile": {
-        "main": "Profile"
+        "main": "Sharing"
     },
     "settings": {
         "hostname_alt_setup": "Set alternative hostname",
