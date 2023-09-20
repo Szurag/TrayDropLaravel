@@ -4,26 +4,57 @@
 
 # TrayDrop
 
-High privacy and Lightweight Files and Clipboard cloud storage with cross-platform synchronization.<br>
-**[Install now »](https://github.com/onhq11/TrayDrop/releases)**<br><br><br>
-**[PC Client](https://github.com/onhq11/TrayDrop) · [Docker Container](https://hub.docker.com/r/onhq/traydrop) · [TrayDrop Server](https://github.com/onhq11/TrayDrop-Server) · [Mobile App](https://github.com/onhq11/TrayDrop-Mobile)**
+High privacy and Lightweight Files and Clipboard cloud storage with share feature.<br>
+**[Check it out »](https://traydrop.pl/)**<br><br><br>
+**[Website](https://traydrop.pl/) · [Docker Container (in progress)](about:blank) · [TrayDrop Server](https://github.com/Szurag/TrayDropLaravel) · [Mobile App (in progress)](about:blank)**
 
 </div><br><br>
 
 ## About
 
-TrayDrop is an open-source program that allows you to upload files and clipboard content to the server and automatically synchronize between devices. Traydrop is lightweight and the client will run even on the slowest machines as long as they have 500MB of free RAM. We offer a [PC client](https://github.com/onhq11/TrayDrop), [Mobile app](https://github.com/onhq11/TrayDrop-Android) and [Website](https://github.com/onhq11/Traydrop-Website) and it's all fully synchronized with each other. If you want to set up a server yourself, you can do it using our [Laravel server repository](https://github.com/Szurag/TraydropLaravel). There you will find a guide on how to do it and enjoy your private server
+TrayDrop is an open-source website that allows you to upload files and clipboard content to the server and automatically synchronize between devices using websockets. Traydrop is also providing share links with expiration date, for easy share files. This lightweight solution will run even on the slowest machines, with instant synchronization. We offer our [Website](https://traydrop.pl/), but if you have an iOS based phone, you can use our Apple Shortcuts for faster access from the sharing drawer [Send to Traydrop](https://www.icloud.com/shortcuts/8c5c14d407644b0b8b082f55a0636acd) and [Share via Traydrop](https://www.icloud.com/shortcuts/c8a420cb5930449baab8c46bf74c09e7). Also if you want to set up a server on your hardware, you can do it using our [Docker Container (in progress)](about:blank) or [TrayDrop Server](https://github.com/Szurag/TrayDropLaravel) based on Laravel. There you will find a guide on how to do it and enjoy your private server.
+
+## How to use?
+- Go to [our Website](https://traydrop.pl/)
+- Leave hostname default (if you stil don't have your own server)
+- Register and enjoy!
+
+## Server Installation (Linux)
+
+### Requirements
+- Docker engine
+- Linux
+
+### Installation
+- Clone repository ```git clone https://github.com/Szurag/TrayDropLaravel.git```
+- Enter to src folder ```cd TrayDropLaravel/src```
+- Copy .env.example and save as .env ```cp .env.example .env```
+- Edit if you need and type ```npm i```
+- When npm installation is finished build frontend ```npm run build```
+- When build is finished go back to the project root folder ```cd ..```
+- Start docker container using ```docker compose up -d```
+- Open http://localhost in browser and enjoy your private Traydrop server!
+
+## Used technologies
+
+- Laravel (Backend)
+- React (Frontend)
+- MariaDB (Database)
+- Redis (Quick Access Database)
+- Websockets (For instant sync without refresh)
+- nginx (Web Server)
 
 ## Features
 
-- Cross-platform clipboard and files synchronization
-- Encrypted passwords, files and clipboards
+- Instant clipboard and files synchronization between clients
+- Share links with expiration date for easier file sharing with friends
+- High privacy, by encrypted passwords, files and clipboards
 
 ## Contributors
 
-The project needs contributors to test the application in terms of privacy, vulnerability and bugs. If so, feel free to [open an issue](https://github.com/onhq11/TrayDrop/issues) or [pull request](https://github.com/onhq11/TrayDrop/pulls) after reading the [Contributing Guidelines](https://github.com/onhq11/TrayDrop/blob/main/CONTRIBUTING.md)
+The project needs contributors to test the application in terms of privacy, vulnerability and bugs. If so, feel free to [open an issue](https://github.com/Szurag/TrayDropLaravel/issues) or [pull request](https://github.com/Szurag/TrayDropLaravel/pulls)
 
 ## Authors
 
-- [@onhq11](https://github.com/onhq11)
-- [@Szurag](https://github.com/Szurag)
+- [@onhq11](https://github.com/onhq11) (Frontend)
+- [@Szurag](https://github.com/Szurag) (Backend)
