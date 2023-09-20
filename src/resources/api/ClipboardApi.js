@@ -1,4 +1,5 @@
 import axios from "axios";
+import { forbiddenLogout } from "./ApiUtils.js";
 
 export const clipboardList = (data, callback) => {
     axios
@@ -14,9 +15,7 @@ export const clipboardList = (data, callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
@@ -36,9 +35,7 @@ export const clipboardCreate = (data, callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
@@ -61,9 +58,7 @@ export const clipboardDelete = (data, callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
@@ -83,9 +78,7 @@ export const clipboardDeleteAll = (callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { forbiddenLogout } from "./ApiUtils.js";
 
 export const filesList = (data, callback) => {
     axios
@@ -14,9 +15,7 @@ export const filesList = (data, callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
@@ -38,9 +37,7 @@ export const filesCreate = (data, onUploadProgress, callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
@@ -60,9 +57,7 @@ export const filesDelete = (data, callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
@@ -90,9 +85,7 @@ export const filesDownload = (data, onDownloadProgress, callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
@@ -112,9 +105,7 @@ export const filesDeleteAll = (callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
@@ -134,52 +125,46 @@ export const filesShare = (data, callback) => {
                 error.response?.status === 401 ||
                 error.response?.status === 403
             ) {
-                localStorage.setItem("token", "");
-                localStorage.setItem("_gqwexvcfq", "");
-                window.location.reload();
+                forbiddenLogout();
             }
             callback(null, error);
         });
 };
 
 export const filesSharedList = (callback) => {
-  axios
-    .get(`${localStorage.getItem("hostname")}/api/share`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-    .then((response) => callback(response))
-    .catch((error) => {
-      if (
-        error.response?.status === 401 ||
-        error.response?.status === 403
-      ) {
-        localStorage.setItem("token", "");
-        localStorage.setItem("_gqwexvcfq", "");
-        window.location.reload();
-      }
-      callback(null, error);
-    });
+    axios
+        .get(`${localStorage.getItem("hostname")}/api/share`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        })
+        .then((response) => callback(response))
+        .catch((error) => {
+            if (
+                error.response?.status === 401 ||
+                error.response?.status === 403
+            ) {
+                forbiddenLogout();
+            }
+            callback(null, error);
+        });
 };
 
 export const filesSharedDelete = (id, callback) => {
-  axios
-    .delete(`${localStorage.getItem("hostname")}/api/share/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-    .then((response) => callback(response))
-    .catch((error) => {
-      if (
-        error.response?.status === 401 ||
-        error.response?.status === 403
-      ) {
-        localStorage.setItem("token", "");
-        localStorage.setItem("_gqwexvcfq", "");
-        window.location.reload();
-      }
-      callback(null, error);
-    });
+    axios
+        .delete(`${localStorage.getItem("hostname")}/api/share/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        })
+        .then((response) => callback(response))
+        .catch((error) => {
+            if (
+                error.response?.status === 401 ||
+                error.response?.status === 403
+            ) {
+                forbiddenLogout();
+            }
+            callback(null, error);
+        });
 };

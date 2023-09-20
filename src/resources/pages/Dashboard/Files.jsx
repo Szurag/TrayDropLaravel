@@ -398,7 +398,7 @@ export default function Files({ passwd, updateData, triggerReRenderShared }) {
             }
 
             if (response) {
-                triggerReRenderShared()
+                triggerReRenderShared();
                 handleSnackbarOpen(
                     "success",
                     t("main:files.share.shared") + ": " + data.fileName,
@@ -518,18 +518,22 @@ export default function Files({ passwd, updateData, triggerReRenderShared }) {
 
     const handleFileFromClipboard = () => {
         navigator.clipboard.read().then((clipboardFiles) => {
-            for (const item of clipboardFiles) {
-                for (const type of item.types) {
-                    if (!type.startsWith("text/")) {
-                        const blob = item.getType(type);
-
-                        handleOpenUploadModal({
-                            blob: blob,
-                            type: type,
+            clipboardFiles.forEach((clipboardItem) => {
+                clipboardItem.types.forEach((type) => {
+                    if (
+                        type.startsWith("image/") ||
+                        type.startsWith("video/") ||
+                        type.startsWith("audio/")
+                    ) {
+                        clipboardItem.getType(type).then((blob) => {
+                            handleOpenUploadModal({
+                                blob: blob,
+                                type: type,
+                            });
                         });
                     }
-                }
-            }
+                });
+            });
         });
     };
 

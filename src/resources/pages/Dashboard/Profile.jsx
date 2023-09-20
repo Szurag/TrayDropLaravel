@@ -12,7 +12,7 @@ import axios from "axios";
 import BarLoading from "../../components/Modules/Sensors/BarLoading";
 import ShareList from "../../components/Modules/ShareList/ShareList.jsx";
 
-export default function Settings({updateData, reRenderShared}) {
+export default function Settings({ updateData, reRenderShared }) {
     const { i18n, t } = useTranslation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -149,11 +149,16 @@ export default function Settings({updateData, reRenderShared}) {
                     sx={{
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "end",
-                        height: "100%",
+                        justifyContent: "space-between",
+                        gap: 2,
+                        height: "93%",
                     }}
                 >
-                    <ShareList updateData={updateData} reRenderShared={reRenderShared} sx={{mb: 2}}/>
+                    <ShareList
+                        updateData={updateData}
+                        reRenderShared={reRenderShared}
+                        sx={{ overflowY: "auto" }}
+                    />
                     {!diskLoading ? (
                         <Bar
                             isLoading={!diskSpace?.total}
