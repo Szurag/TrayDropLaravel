@@ -102,7 +102,7 @@ export default function Dashboard() {
         );
 
         channel.bind("files.clipboard.updated", function (data) {
-            if (data.type !== "deleted") {
+            if (data.type !== "deleted" && data.type !== "destroyed") {
                 changeFavicon(true);
                 setTimeout(() => {
                     changeFavicon(false);
