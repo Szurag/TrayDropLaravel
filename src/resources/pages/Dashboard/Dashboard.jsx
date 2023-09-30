@@ -66,6 +66,11 @@ export default function Dashboard() {
             return;
         }
 
+        if(localStorage.getItem("device_type") === "electron") {
+            window.close();
+            return;
+        }
+
         setPasswd(
             btoa(
                 caesarShift(
