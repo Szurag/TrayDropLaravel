@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import hashPassword from "../../components/Tools/hashAlgorithm";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 export default function Login() {
     const [t] = useTranslation();
@@ -14,6 +15,7 @@ export default function Login() {
     const { enqueueSnackbar } = useSnackbar();
 
     const [animation_tile_opacity, setAnimation_tile_opacity] = useState(0.0);
+    const [loginLoading, setLoginLoading] = useState(false);
 
     useEffect(() => {
         if (!localStorage.getItem("hostname")?.length > 0) {
@@ -29,6 +31,7 @@ export default function Login() {
 
     const methods = useForm();
     const onSubmit = (formValues) => {
+        setLoginLoading(true);
         axios
             .post(
                 `${localStorage.getItem("hostname")}/api/auth/login`,
@@ -42,6 +45,7 @@ export default function Login() {
             )
             .then((response) => response.data)
             .then((data) => {
+                setLoginLoading(false);
                 if (typeof data.token !== "undefined") {
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("user_id", data.user.id);
@@ -54,6 +58,7 @@ export default function Login() {
                 }
             })
             .catch((error) => {
+                setLoginLoading(false);
                 if (
                     error.response.status === 401 ||
                     error.response.status === 403
@@ -74,7 +79,7 @@ export default function Login() {
     };
 
     const handleSetup = () => {
-        navigate(generatePath("/setup"));
+        navigate(generatePath("/setup?skip_intro=1"));
     };
 
     const handleSnackbarOpen = (color = "success", content = ".") => {
@@ -104,7 +109,7 @@ export default function Login() {
                         xl: "35%",
                     },
                     opacity: animation_tile_opacity,
-                    transition: "1s opacity",
+                    transition: "0.5s opacity",
                 }}
             >
                 <Typography variant="h4" sx={{ mb: 2 }}>
@@ -144,14 +149,15 @@ export default function Login() {
                                     mt: 3,
                                 }}
                             >
-                                <Button
+                                <LoadingButton
                                     variant="contained"
                                     type="submit"
                                     sx={{ flex: 1 }}
                                     color="light"
+                                    loading={loginLoading}
                                 >
                                     {t("main:login")}
-                                </Button>
+                                </LoadingButton>
                                 <Button
                                     variant="outlined"
                                     sx={{ flex: 1 }}
