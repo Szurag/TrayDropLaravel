@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://github.com/Szurag/TrayDropLaravel/blob/main/src/resources/img/banner.jpg?raw=true" style="border-radius: 20px"><br><br>
+<img src="https://raw.githubusercontent.com/Szurag/TrayDropLaravel/main/src/resources/assets/img/banner.jpg" style="border-radius: 20px"><br><br>
 
 # TrayDrop
 
