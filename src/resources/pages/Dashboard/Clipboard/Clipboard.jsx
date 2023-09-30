@@ -4,12 +4,13 @@ import {
     clipboardCreate,
     clipboardDelete,
     clipboardDeleteAll,
-} from "../../api/ClipboardApi";
-import Card from "../../components/Modules/Card";
-import Menu from "../../components/Modules/Menu";
-import DeleteModal from "../../components/Modules/Modals/DeleteModal";
-import Tile from "../../components/Tile/Tile";
-import TileHeader from "../../components/Tile/TileHeader";
+    clipboardUpdate,
+} from "../../../api/ClipboardApi.js";
+import Card from "../../../components/Card";
+import Menu from "../../../components/Menu";
+import DeleteModal from "../../../components/Modals/DeleteModal";
+import Tile from "../../../components/Tile/Tile.jsx";
+import TileHeader from "../../../components/Tile/TileHeader.jsx";
 import { Trans, useTranslation } from "react-i18next";
 import { Box, Typography, Skeleton, Pagination } from "@mui/material";
 import { useSnackbar } from "notistack";
@@ -216,6 +217,19 @@ export default function Clipboard({ passwd, updateData }) {
         handleCloseMenu();
     };
 
+    const handleClipboardEdit = (id, value) => {
+        clipboardUpdate({ id, value }, (response, error) => {
+            if (error) {
+                handleSnackbarOpen("error", `${error}`);
+                return;
+            }
+
+            if (response) {
+                handleSnackbarOpen("success", t("main:clipboard.updated"));
+            }
+        });
+    };
+
     useEffect(() => {
         if (passwd?.length > 0) {
             handleClipboardList();
@@ -341,6 +355,7 @@ export default function Clipboard({ passwd, updateData }) {
                                     onConfirm={handleClipboardCopy}
                                     buttonContent={clipboardStatus[itemIndex]}
                                     data={{
+                                        id: item.id,
                                         index: itemIndex,
                                         content: item.content,
                                         copyContent: item.content,
@@ -363,6 +378,7 @@ export default function Clipboard({ passwd, updateData }) {
                                             type: "clipboard",
                                         })
                                     }
+                                    clipboardEditConfirm={handleClipboardEdit}
                                 />
                             ))
                         ) : (

@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
 
-export default function BarLoading() {
+export default function Loading() {
     return (
         <Box>
             <Box sx={{ display: "flex", mx: 0.75, mb: 0.5 }}>

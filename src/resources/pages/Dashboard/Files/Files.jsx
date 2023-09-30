@@ -6,13 +6,13 @@ import {
     filesDownload,
     filesList,
     filesShare,
-} from "../../api/FilesApi";
-import Card from "../../components/Modules/Card";
+} from "../../../api/FilesApi.js";
+import Card from "../../../components/Card";
 import { useDropzone } from "react-dropzone";
-import Menu from "../../components/Modules/Menu";
-import DeleteModal from "../../components/Modules/Modals/DeleteModal";
-import Tile from "../../components/Tile/Tile";
-import TileHeader from "../../components/Tile/TileHeader";
+import Menu from "../../../components/Menu";
+import DeleteModal from "../../../components/Modals/DeleteModal";
+import Tile from "../../../components/Tile/Tile.jsx";
+import TileHeader from "../../../components/Tile/TileHeader.jsx";
 import {
     Box,
     Typography,
@@ -25,12 +25,12 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState, useCallback, useEffect } from "react";
-import FilesProgress from "../../components/Modules/FilesProgress/FilesProgress";
+import FilesProgress from "./Progress/FilesProgress";
 import { Icon } from "@iconify/react";
-import ShareModal from "../../components/Modules/Modals/ShareModal";
-import InfoModal from "../../components/Modules/Modals/InfoModal";
+import ShareModal from "./Modal/ShareModal";
+import InfoModal from "../../../components/Modals/InfoModal";
 import axios from "axios";
-import UploadModal from "../../components/Modules/Modals/UploadModal";
+import UploadModal from "./Modal/UploadModal";
 
 export default function Files({ passwd, updateData, triggerReRenderShared }) {
     const { i18n, t } = useTranslation();

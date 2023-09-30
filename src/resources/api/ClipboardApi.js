@@ -83,3 +83,24 @@ export const clipboardDeleteAll = (callback) => {
             callback(null, error);
         });
 };
+
+export const clipboardUpdate = (data, callback) => {
+    axios
+        .put(`${localStorage.getItem("hostname")}/api/clipboard/` + data.id, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+            },
+            body: JSON.stringify({ value: data.value }),
+        })
+        .then((response) => callback(response))
+        .catch((error) => {
+            if (
+                error.response?.status === 401 ||
+                error.response?.status === 403
+            ) {
+                forbiddenLogout();
+            }
+            callback(null, error);
+        });
+};

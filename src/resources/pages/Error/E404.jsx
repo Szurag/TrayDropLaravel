@@ -1,6 +1,6 @@
 import Tile from "../../components/Tile/Tile";
 import { Box, Typography, Button } from "@mui/material";
-import icon from "../../img/icon.png";
+import icon from "../../assets/img/icon.png";
 import { generatePath, useNavigate } from "react-router-dom";
 
 export default function E404() {

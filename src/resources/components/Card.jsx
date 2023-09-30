@@ -1,12 +1,7 @@
 import { Icon } from "@iconify/react";
-import {
-    Box,
-    Button,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import EditableField from "./EditableField.jsx";
 
 export default function Card({
     type,
@@ -17,9 +12,9 @@ export default function Card({
     onConfirm,
     optionalButtons,
     sx,
+    clipboardEditConfirm,
 }) {
     const [t] = useTranslation();
-    const theme = useTheme();
 
     return (
         <Box
@@ -37,16 +32,24 @@ export default function Card({
         >
             <Box sx={{ display: "flex", gap: 1 }}>
                 <Box>{icon}</Box>
-                <Typography
-                    variant="h5"
-                    sx={{
-                        fontSize: "18px",
-                        textWrap: "wrap",
-                        wordBreak: "break-all",
-                    }}
-                >
-                    {data.content}
-                </Typography>
+                {type === "clipboard" ? (
+                    <EditableField
+                        id={data.id}
+                        value={data.content}
+                        onConfirm={clipboardEditConfirm}
+                    />
+                ) : (
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            fontSize: "18px",
+                            textWrap: "wrap",
+                            wordBreak: "break-all",
+                        }}
+                    >
+                        {data.content}
+                    </Typography>
+                )}
             </Box>
             <Box
                 sx={{

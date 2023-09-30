@@ -32,7 +32,8 @@
         "remove_confirmation": "Czy na pewno chcesz usunąć <strong>{{content}}</strong> ze schowka?",
         "no_results": "Wklej zawartość schowka (Ctrl+V)",
         "empty": "Schowek jest pusty",
-        "deleted": "Pomyślnie usunięto schowek z serwera"
+        "deleted": "Pomyślnie usunięto schowek z serwera",
+        "updated": "Pomyślnie zaaktualizowano schowek"
     },
     "files": {
         "main": "Pliki",
@@ -105,5 +106,6 @@
     "server_disk": "Dysk serwerowy",
     "available_of": "dostępne z",
     "close": "Zamknij",
-    "continue": "Kontynuuj"
+    "continue": "Kontynuuj",
+    "edit": "Edytuj"
 }

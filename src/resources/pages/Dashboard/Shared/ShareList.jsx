@@ -2,10 +2,10 @@ import { Box, Pagination, Skeleton, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { filesSharedDelete, filesSharedList } from "../../../api/FilesApi.js";
-import Card from "../Card.jsx";
+import Card from "../../../components/Card.jsx";
 import { Icon } from "@iconify/react";
 import { useSnackbar } from "notistack";
-import DeleteModal from "../Modals/DeleteModal.jsx";
+import DeleteModal from "../../../components/Modals/DeleteModal.jsx";
 
 export default function ShareList({ updateData, reRenderShared, ...props }) {
     const { i18n, t } = useTranslation();

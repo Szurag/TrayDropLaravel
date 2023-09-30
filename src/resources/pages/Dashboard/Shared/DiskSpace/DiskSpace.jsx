@@ -7,7 +7,14 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
-export default function Bar({ barValue, icon, label, value, description, sx }) {
+export default function DiskSpace({
+    barValue,
+    icon,
+    label,
+    value,
+    description,
+    sx,
+}) {
     const [body, setBody] = useState([]);
 
     useEffect(() => {
