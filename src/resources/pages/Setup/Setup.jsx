@@ -13,7 +13,7 @@ import icon from "../../assets/img/icon.png";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@iconify/react";
-import { generatePath, useNavigate } from "react-router-dom";
+import { generatePath, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useDebounceEffect } from "../../components/Tools/useDebounceEffect";
 import { useTheme } from "@mui/material";
@@ -39,9 +39,22 @@ export default function Setup() {
     const [animation_icon_size, setAnimation_icon_size] = useState("40%");
     const [animation_tile_size, setAnimation_tile_size] = useState(10);
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
     useEffect(() => {
         i18n.changeLanguage(navigator.language || "en");
         localStorage.setItem("locale", i18n.language);
+
+        if (searchParams.get("skip_intro") === "1") {
+            setAnimation_tile_opacity(1);
+            setAnimation_tile_size(1);
+            setAnimation_title_opacity(0);
+            setAnimation_field_opacity(1);
+            setAnimation_title_size(40);
+            setAnimation_icon_size("30%");
+            setAnimation_tile_size(7);
+            return;
+        }
 
         if (isExtraSmall) {
             setAnimation_tile_size(5);
@@ -109,7 +122,7 @@ export default function Setup() {
             setAnimation_tile_opacity(0);
             setTimeout(() => {
                 navigate(generatePath("/login"));
-            }, 1200);
+            }, 700);
         }
     };
 
@@ -142,7 +155,7 @@ export default function Setup() {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 p: animation_tile_size,
-                transition: "1s all, 2s padding",
+                transition: "0.5s all, 2s padding",
                 opacity: animation_tile_opacity,
                 width: { xs: "90%", md: "auto" },
             }}
