@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
-import Files from "./Files";
-import Clipboard from "./Clipboard";
-import Profile from "./Profile";
+import Files from "./Files/Files.jsx";
+import Clipboard from "./Clipboard/Clipboard.jsx";
+import Profile from "./Shared/Shared.jsx";
 
 export default function Mobile({
     passwd,

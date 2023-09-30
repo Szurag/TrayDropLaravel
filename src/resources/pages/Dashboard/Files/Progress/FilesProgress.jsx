@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import Instance from "./Instance";
+import Instance from "./Instance.jsx";
 import { useEffect, useState } from "react";
 
 export default function FilesProgress({

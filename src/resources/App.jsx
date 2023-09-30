@@ -6,11 +6,11 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Setup from "./pages/Setup/Setup";
 import E404 from "./pages/Error/E404";
-import { SnackbarProvider, useSnackbar } from "notistack";
-import SnackbarCloseButton from "./components/Modules/SnackbarCloseButton";
+import { SnackbarProvider } from "notistack";
+import SnackbarCloseButton from "./components/Snackbar/SnackbarCloseButton";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import SnackbarSetupInfo from "./components/Modules/SnackbarSetupInfo";
+import SnackbarSetupInfo from "./components/Snackbar/SnackbarSetupInfo";
 
 const validateToken = () => {
     return axios

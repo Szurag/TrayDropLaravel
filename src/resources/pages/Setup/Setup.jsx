@@ -9,7 +9,7 @@ import {
     Tooltip,
 } from "@mui/material";
 import Tile from "../../components/Tile/Tile";
-import icon from "../../img/icon.png";
+import icon from "../../assets/img/icon.png";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@iconify/react";

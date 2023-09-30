@@ -32,7 +32,8 @@
         "remove_confirmation": "Are you sure you want to delete <strong>{{content}}</strong> from clipboard?",
         "no_results": "Paste clipboard content (Ctrl+V)",
         "empty": "Clipboard content is empty",
-        "deleted": "Successfully deleted clipboard from server"
+        "deleted": "Successfully deleted clipboard from server",
+        "updated": "Successfully updated clipboard"
     },
     "files": {
         "main": "Files",
@@ -105,5 +106,6 @@
     "server_disk": "Server disk",
     "available_of": "available of",
     "close": "Close",
-    "continue": "Continue"
+    "continue": "Continue",
+    "edit": "Edit"
 }

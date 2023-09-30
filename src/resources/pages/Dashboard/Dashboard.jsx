@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { generatePath } from "react-router-dom";
 import Mobile from "./Mobile";
 import { caesarShift, hex2a } from "../../components/Tools/caesarShift";
-import Profile from "./Profile";
-import Files from "./Files";
-import Clipboard from "./Clipboard";
+import Profile from "./Shared/Shared.jsx";
+import Files from "./Files/Files.jsx";
+import Clipboard from "./Clipboard/Clipboard.jsx";
 import { useMediaQuery, useTheme, Box } from "@mui/material";
 import Pusher from "pusher-js";
 import favicon_active from "../../../public/favicon-active.ico";
 import favicon_normal from "../../../public/favicon.ico";
-import notification from "../../sound/notification.mp3";
+import notification from "../../assets/sound/notification.mp3";
 import { Howl } from "howler";
 
 export default function Dashboard() {

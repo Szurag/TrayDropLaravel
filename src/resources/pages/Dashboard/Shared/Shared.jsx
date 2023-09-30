@@ -1,16 +1,16 @@
 import { Box } from "@mui/material";
-import Tile from "../../components/Tile/Tile";
-import TileHeader from "../../components/Tile/TileHeader";
+import Tile from "../../../components/Tile/Tile.jsx";
+import TileHeader from "../../../components/Tile/TileHeader.jsx";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import Menu from "../../components/Modules/Menu";
-import HostnameModal from "../../components/Modules/Modals/HostnameModal";
+import Menu from "../../../components/Menu";
+import HostnameModal from "./Modal/HostnameModal";
 import { useSnackbar } from "notistack";
-import disk from "../../img/disk.png";
-import Bar from "../../components/Modules/Sensors/Bar";
+import disk from "../../../assets/img/disk.png";
+import Bar from "./DiskSpace/DiskSpace.jsx";
 import axios from "axios";
-import BarLoading from "../../components/Modules/Sensors/BarLoading";
-import ShareList from "../../components/Modules/ShareList/ShareList.jsx";
+import Loading from "./DiskSpace/Loading";
+import ShareList from "./ShareList.jsx";
 
 export default function Settings({ updateData, reRenderShared }) {
     const { i18n, t } = useTranslation();
@@ -181,7 +181,7 @@ export default function Settings({ updateData, reRenderShared }) {
                             sx={{ my: 2 }}
                         />
                     ) : (
-                        <BarLoading />
+                        <Loading />
                     )}
                 </Box>
             </Tile>
