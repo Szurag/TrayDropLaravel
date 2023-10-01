@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,11 @@ export default function EditableField({ id, value, onConfirm }) {
     const [currentValue, setCurrentValue] = useState(value);
     const [resultValue, setResultValue] = useState(value);
     const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        setCurrentValue(value);
+        setResultValue(value);
+    }, [value]);
 
     const handleAbortEdit = () => {
         setIsEditing(false);
