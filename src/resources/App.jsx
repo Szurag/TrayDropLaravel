@@ -11,6 +11,7 @@ import SnackbarCloseButton from "./components/Snackbar/SnackbarCloseButton";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import SnackbarSetupInfo from "./components/Snackbar/SnackbarSetupInfo";
+import TokenScrapper from "./pages/TokenScrapper/TokenScrapper.jsx";
 
 const validateToken = () => {
     return axios
@@ -154,6 +155,7 @@ function App() {
                         <Route path="login" element={<Login />} />
                         <Route path="register" element={<Register />} />
                         <Route path="setup" element={<Setup />} />
+                        <Route path="credentials" element={<TokenScrapper />} />
                         <Route path="*" element={<E404 />} />
                     </Routes>
                 </BrowserRouter>
