@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
+import CollapseContent from "./CollapseContent.jsx";
 
 export default function EditableField({ id, value, onConfirm }) {
     const [t] = useTranslation();
@@ -63,7 +64,7 @@ export default function EditableField({ id, value, onConfirm }) {
                         wordBreak: "break-all",
                     }}
                 >
-                    {resultValue}
+                    <CollapseContent content={resultValue} />
                     <Tooltip title={t("main:edit")}>
                         <IconButton
                             size="small"

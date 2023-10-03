@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import { Box, Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import EditableField from "./EditableField.jsx";
+import CollapseContent from "./CollapseContent.jsx";
 
 export default function Card({
     type,
@@ -47,7 +48,7 @@ export default function Card({
                             wordBreak: "break-all",
                         }}
                     >
-                        {data.content}
+                        <CollapseContent content={data.content} />
                     </Typography>
                 )}
             </Box>
