@@ -86,6 +86,27 @@ export default function Card({
                         mt: 3,
                     }}
                 >
+                    {type === "clipboard" &&
+                        data.content.match(
+                            `(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})`,
+                        ) && (
+                            <Button
+                                color={"light"}
+                                variant={"outlined"}
+                                startIcon={<Icon icon="ion:open-outline" />}
+                                onClick={() =>
+                                    window.open(
+                                        data.content.includes("://")
+                                            ? data.content
+                                            : "http://" + data.content,
+                                        "_blank",
+                                    )
+                                }
+                                sx={{ width: { xs: "100%", sm: "auto" } }}
+                            >
+                                {t("main:open_url")}
+                            </Button>
+                        )}
                     {optionalButtons?.length > 0 &&
                         optionalButtons.map((item, itemIndex) => (
                             <Box

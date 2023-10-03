@@ -42,7 +42,7 @@ export default function E404() {
             </Typography>
             <Button
                 variant="outlined"
-                sx={{ flex: 1 }}
+                sx={{ flex: 1, mt: 5 }}
                 color="light"
                 onClick={() => navigate(generatePath("/"))}
             >
