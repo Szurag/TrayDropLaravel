@@ -4,7 +4,7 @@ export default function Tile({ sx, children, ...props }) {
     return (
         <Box
             sx={{
-                bgcolor: "rgba(160,215,255, 0.11)",
+                backgroundColor: "rgba(20,35,60,0.51)",
                 borderRadius: "9px",
                 py: 1.8,
                 px: 2.5,
