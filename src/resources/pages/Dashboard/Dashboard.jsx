@@ -66,7 +66,7 @@ export default function Dashboard() {
             return;
         }
 
-        if(localStorage.getItem("device_type") === "electron") {
+        if (localStorage.getItem("device_type") === "electron") {
             window.close();
             return;
         }
