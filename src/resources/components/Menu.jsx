@@ -14,8 +14,8 @@ export default function Menu({ anchorEl, handleClose, isOpen, options }) {
                     borderRadius: 2,
                     marginTop: theme.spacing(1),
                     minWidth: 180,
-                    backgroundColor: "rgba(15,15,25, 0.8)",
-                    backdropFilter: "grayscale(30%) brightness(60%)",
+                    backgroundColor: "rgba(20,35,60,0.8)",
+                    backdropFilter: "brightness(10%)",
                     color:
                         theme.palette.mode === "light"
                             ? "rgb(55, 65, 81)"

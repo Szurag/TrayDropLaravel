@@ -108,5 +108,7 @@
     "close": "Close",
     "continue": "Continue",
     "edit": "Edit",
-    "open_url": "Open URL"
+    "open_url": "Open URL",
+    "collapse": "Collapse",
+    "extend": "Extend"
 }

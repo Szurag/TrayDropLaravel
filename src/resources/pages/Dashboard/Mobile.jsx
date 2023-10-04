@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import Files from "./Files/Files.jsx";
 import Clipboard from "./Clipboard/Clipboard.jsx";
 import Profile from "./Shared/Shared.jsx";
+import pairdrop from "../../assets/img/pairdrop.png";
+import PairdropMobile from "./Pairdrop/PairdropMobile.jsx";
 
 export default function Mobile({
     passwd,
@@ -15,10 +17,12 @@ export default function Mobile({
     const [t] = useTranslation();
     const [value, setValue] = useState(0);
     const [body, setBody] = useState([]);
+    const [pairdropDisplay, setPairdropDisplay] = useState(false);
 
     useEffect(() => {
         switch (value) {
             case 0:
+                setPairdropDisplay(false);
                 setBody(
                     <Files
                         passwd={passwd}
@@ -29,10 +33,12 @@ export default function Mobile({
                 break;
 
             case 1:
+                setPairdropDisplay(false);
                 setBody(<Clipboard passwd={passwd} updateData={updateData} />);
                 break;
 
             case 2:
+                setPairdropDisplay(false);
                 setBody(
                     <Profile
                         updateData={updateData}
@@ -41,7 +47,13 @@ export default function Mobile({
                 );
                 break;
 
+            case 3:
+                setPairdropDisplay(true);
+                setBody(<></>);
+                break;
+
             default: {
+                setPairdropDisplay(false);
                 setBody(
                     <Files
                         passwd={passwd}
@@ -55,7 +67,12 @@ export default function Mobile({
 
     return (
         <>
-            <Box sx={{ p: 3, height: "90vh" }}>{body}</Box>
+            <Box sx={{ p: 3, height: "100vh", pb: 10 }}>
+                {body}
+                <PairdropMobile
+                    sx={{ display: pairdropDisplay ? "block" : "none" }}
+                />
+            </Box>
             <BottomNavigation
                 showLabels
                 value={value}
@@ -67,7 +84,7 @@ export default function Mobile({
                     bottom: 0,
                     left: 0,
                     width: "100%",
-                    bgcolor: "rgba(160,215,255, 0.11)",
+                    bgcolor: "rgba(20,35,60,0.51)",
                     backdropFilter: "blur(8px)",
                 }}
             >
@@ -99,6 +116,21 @@ export default function Mobile({
                         <Icon
                             icon="mdi:cog-outline"
                             style={{ fontSize: 20, marginBottom: "5px" }}
+                            className="Mui-selected"
+                        />
+                    }
+                    sx={{ ".Mui-selected": { color: "#fff" } }}
+                />
+                <BottomNavigationAction
+                    label={"Pairdrop"}
+                    icon={
+                        <img
+                            src={pairdrop}
+                            height={20}
+                            style={{
+                                marginBottom: "5px",
+                                filter: "grayscale(100%) brightness(300%)",
+                            }}
                             className="Mui-selected"
                         />
                     }

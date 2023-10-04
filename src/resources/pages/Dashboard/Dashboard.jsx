@@ -6,12 +6,20 @@ import { caesarShift, hex2a } from "../../components/Tools/caesarShift";
 import Profile from "./Shared/Shared.jsx";
 import Files from "./Files/Files.jsx";
 import Clipboard from "./Clipboard/Clipboard.jsx";
-import { useMediaQuery, useTheme, Box } from "@mui/material";
+import {
+    useMediaQuery,
+    useTheme,
+    Box,
+    IconButton,
+    Tooltip,
+} from "@mui/material";
 import Pusher from "pusher-js";
 import favicon_active from "../../../public/favicon-active.ico";
 import favicon_normal from "../../../public/favicon.ico";
 import notification from "../../assets/sound/notification.mp3";
 import { Howl } from "howler";
+import pairdrop from "../../assets/img/pairdrop.png";
+import PairdropEmbed from "./Pairdrop/PairdropEmbed.jsx";
 
 export default function Dashboard() {
     const [passwd, setPasswd] = useState("");
@@ -20,10 +28,17 @@ export default function Dashboard() {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("xl"));
     const [updateData, setUpdateData] = useState({});
     const [reRenderShared, setReRenderShared] = useState(false);
+    const [pairdropPositionOffset, setPairdropPositionOffset] = useState(0);
+    const [pairdropState, setPairdropState] = useState(false);
 
     const notificationSound = new Howl({
         src: [notification],
     });
+
+    const handleTogglePairdrop = () => {
+        setPairdropPositionOffset(pairdropState ? 0 : 48);
+        setPairdropState(!pairdropState);
+    };
 
     const changeFavicon = (active) => {
         let link = document.querySelector("link[rel~='icon']");
@@ -156,6 +171,29 @@ export default function Dashboard() {
                             />
                         </>
                     )}
+                    <PairdropEmbed state={pairdropState} />
+                    <Box
+                        sx={{
+                            position: "absolute",
+                            right: pairdropPositionOffset + -48 + "px",
+                            bottom: pairdropPositionOffset + -48 + "px",
+                            transition: "0.2s",
+                            "&:hover": {
+                                right: pairdropState
+                                    ? pairdropPositionOffset + -48 + "px"
+                                    : "-24px",
+                                bottom: pairdropState
+                                    ? pairdropPositionOffset + -48 + "px"
+                                    : "-24px",
+                                pr: "5px",
+                                pb: "5px",
+                            },
+                        }}
+                    >
+                        <IconButton onClick={handleTogglePairdrop}>
+                            <img src={pairdrop} height="48px" width="48px" />
+                        </IconButton>
+                    </Box>
                 </Box>
             )}
         </>
