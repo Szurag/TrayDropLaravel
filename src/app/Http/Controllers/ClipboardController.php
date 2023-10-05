@@ -76,7 +76,6 @@ class ClipboardController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        Redis::set("user_clipboard_change:" . Auth::id(), true);
         event(new FilesClipboardUpdated(
             Auth::id(),
             "clipboard",
@@ -86,27 +85,6 @@ class ClipboardController extends Controller
         return response()->json([
             'result' => $clipboard
         ]);
-    }
-
-    public function updates(Request $request) : JsonResponse
-    {
-        $timeout = 80;
-        $startTime = time();
-        while (time() - $startTime < $timeout) {
-
-            $val = Redis::get("user_clipboard_change:" . Auth::id());
-
-            if ($val) {
-                Redis::set("user_clipboard_change:" . Auth::id(), false);
-                return response()->json([
-                    'message' => 'Update!'
-                ]);
-            }
-
-            usleep(250000);
-        }
-
-        return response()->json([], 204);
     }
 
     public function destroy(string $id): JsonResponse
@@ -132,12 +110,10 @@ class ClipboardController extends Controller
             "clipboard",
             "destroyed"
         ));
-        Redis::set("user_clipboard_change:" . Auth::id(), true);
 
         return response()->json([
             'message' => 'Clipboard item deleted.'
         ]);
-
     }
 
     public function destroyAll(Request $request): JsonResponse
@@ -158,7 +134,6 @@ class ClipboardController extends Controller
             "clipboard",
             "deleted"
         ));
-        Redis::set("user_clipboard_change:" . Auth::id(), true);
 
         return response()->json([
             'message' => 'Clipboard items deleted.'

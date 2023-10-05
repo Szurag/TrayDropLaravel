@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\FilesClipboardUpdated;
 use App\Models\File;
 use App\Models\Share;
 use Carbon\Carbon;
@@ -14,7 +15,8 @@ use Illuminate\Support\Str;
 
 class ShareController extends Controller
 {
-    public function index(Request $request) : JsonResponse {
+    public function index(Request $request): JsonResponse
+    {
 
         // TODO: Tego typu to sie powtarza trzeba ogarnąć jakieś middleware może?
         if ($request->input('per_page') > 100) {
@@ -32,7 +34,8 @@ class ShareController extends Controller
         return response()->json($shares);
     }
 
-    public function share(Request $request) : JsonResponse {
+    public function share(Request $request): JsonResponse
+    {
 
         $request->validate([
             'file_id' => 'required',
@@ -47,7 +50,7 @@ class ShareController extends Controller
 
             $password = base64_decode($request->input('password'));
 
-            if (Hash::check($password, Auth::user()->password ) === false) {
+            if (Hash::check($password, Auth::user()->password) === false) {
                 return response()->json([
                     'message' => 'Invalid password.'
                 ], 400);
@@ -55,7 +58,7 @@ class ShareController extends Controller
 
             $file = File::where('id', $request->input('file_id'))->where('user_id', Auth::id())->first();
 
-            if (! $file) {
+            if (!$file) {
                 return response()->json([
                     'message' => 'File not found.'
                 ], 404);
@@ -87,6 +90,12 @@ class ShareController extends Controller
                 'expiration_date' => $request->input('expiration_date'),
             ]);
 
+            event(new FilesClipboardUpdated(
+                Auth::id(),
+                "share",
+                "created"
+            ));
+
             return response()->json([
                 'message' => 'File shared.',
                 'share' => $share
@@ -95,7 +104,7 @@ class ShareController extends Controller
         } else {
             $file = File::where('id', $request->input('file_id'))->where('user_id', Auth::id())->first();
 
-            if (! $file) {
+            if (!$file) {
                 return response()->json([
                     'message' => 'File not found.'
                 ], 404);
@@ -137,10 +146,9 @@ class ShareController extends Controller
         }
 
 
-
         $share = Share::where('download_code', $download_code)->first();
 
-        if (! $share) {
+        if (!$share) {
             return response()->json([
                 'message' => 'File not found.'
             ], 404);
@@ -157,7 +165,6 @@ class ShareController extends Controller
         }
 
 
-
         $headers = [
             'Content-Type' => 'application/octet-stream',
             'Content-Disposition' => 'attachment; filename="' . $file->original_name . '"',
@@ -171,7 +178,7 @@ class ShareController extends Controller
     {
         $share = Share::where('file_id', $file_id)->where('user_id', Auth::id())->first();
 
-        if (! $share) {
+        if (!$share) {
             return response()->json([
                 'message' => 'Share not found.'
             ], 404);
@@ -180,6 +187,13 @@ class ShareController extends Controller
         if ($share->file_path !== null) {
             Storage::delete($share->file_path);
         }
+
+        event(new FilesClipboardUpdated(
+            Auth::id(),
+            "share",
+            "deleted"
+        ));
+
         $share->delete();
 
         return response()->json([

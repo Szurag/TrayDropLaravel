@@ -16,7 +16,6 @@ services:
     depends_on:
       - php
       - mariadb
-      - redis
     networks:
       - laravel
   
@@ -64,13 +63,3 @@ services:
       - laravel
     ports:
       - "8080:80"
-
-  redis:
-    image: redis:6.2-alpine
-    restart: unless-stopped
-    ports:
-      - '6379:6379'
-    volumes:
-      - ./redis:/data
-    networks:
-      - laravel

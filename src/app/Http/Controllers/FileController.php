@@ -25,7 +25,8 @@ class FileController extends Controller
      * @return Collection
      */
 
-    public function index(Request $request) : JsonResponse {
+    public function index(Request $request): JsonResponse
+    {
 
         if ($request->input('per_page') > 100) {
             return response()->json([
@@ -42,13 +43,14 @@ class FileController extends Controller
         return response()->json($files);
     }
 
-    public function store(Request $request) : JsonResponse {
+    public function store(Request $request): JsonResponse
+    {
         $request->validate([
             'file' => 'required',
             'password' => 'required'
         ]);
 
-        if (!Hash::check(base64_decode($request->input('password')), Auth::user()->password )) {
+        if (!Hash::check(base64_decode($request->input('password')), Auth::user()->password)) {
             return response()->json([
                 'message' => 'Invalid password.'
             ], 400);
@@ -83,7 +85,6 @@ class FileController extends Controller
             ]);
 
 
-
         } else {
 
             $file = $request->file('file');
@@ -103,7 +104,6 @@ class FileController extends Controller
             ]);
         }
 
-        Redis::set("user_change:" . Auth::id(), true);
         event(new FilesClipboardUpdated(
             Auth::id(),
             "files",
@@ -116,32 +116,12 @@ class FileController extends Controller
         ], 201);
     }
 
-    public function updates(Request $request) : JsonResponse
+    public function show(int $id): JsonResponse
     {
-        $timeout = 80;
-        $startTime = time();
-        while (time() - $startTime < $timeout) {
-
-            $val = Redis::get("user_change:" . Auth::id());
-
-            if ($val) {
-                Redis::set("user_change:" . Auth::id(), false);
-                return response()->json([
-                    'message' => 'Update!'
-                ]);
-            }
-
-            usleep(250000);
-        }
-
-        return response()->json([], 204);
-    }
-
-    public function show(int $id) : JsonResponse {
 
         $file = File::where('id', $id)->where('user_id', Auth::id())->first();
 
-        if (! $file) {
+        if (!$file) {
             return response()->json([
                 'message' => 'File not found.'
             ], 404);
@@ -162,7 +142,7 @@ class FileController extends Controller
 
         $password = base64_decode($request->input('password'));
 
-        if (Hash::check($password, Auth::user()->password ) === false) {
+        if (Hash::check($password, Auth::user()->password) === false) {
             return response()->json([
                 'message' => 'Invalid password.'
             ], 400);
@@ -172,7 +152,7 @@ class FileController extends Controller
 
             $file = File::where('id', $id)->where('user_id', Auth::id())->first();
 
-            if (! $file) {
+            if (!$file) {
                 return response()->json([
                     'message' => 'File not found.'
                 ], 404);
@@ -187,7 +167,7 @@ class FileController extends Controller
         } else {
             $file = File::where('id', $id)->where('user_id', Auth::id())->first();
 
-            if (! $file) {
+            if (!$file) {
                 return response()->json([
                     'message' => 'File not found.'
                 ], 404);
@@ -205,7 +185,7 @@ class FileController extends Controller
         return response($decryptedContents, 200, $headers);
     }
 
-    public function edit(Request $request, string $id) : JsonResponse
+    public function edit(Request $request, string $id): JsonResponse
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -213,7 +193,7 @@ class FileController extends Controller
 
         $file = File::where('id', $id)->where('user_id', Auth::id())->first();
 
-        if (! $file) {
+        if (!$file) {
             return response()->json([
                 'message' => 'File not found.'
             ], 404);
@@ -229,10 +209,11 @@ class FileController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, int $id) : JsonResponse {
+    public function destroy(Request $request, int $id): JsonResponse
+    {
         $file = File::where('id', $id)->where('user_id', Auth::id())->first();
 
-        if (! $file) {
+        if (!$file) {
             return response()->json([
                 'message' => 'File not found.'
             ], 404);
@@ -243,8 +224,6 @@ class FileController extends Controller
         if ($share) {
             Storage::delete($share->file_path);
         }
-
-        Redis::set("user_change:" . Auth::id(), true);
 
         Storage::delete($file->path);
 
@@ -266,7 +245,8 @@ class FileController extends Controller
         ]);
     }
 
-    public function destroyAll(Request $request) : JsonResponse {
+    public function destroyAll(Request $request): JsonResponse
+    {
         $files = File::where('user_id', Auth::id())->get();
 
         foreach ($files as $file) {
@@ -286,7 +266,6 @@ class FileController extends Controller
             File::destroy($file->id);
         }
 
-        Redis::set("user_change:" . Auth::id(), true);
         event(new FilesClipboardUpdated(
             Auth::id(),
             "files",
