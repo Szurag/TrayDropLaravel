@@ -31,19 +31,33 @@ export default function Setup() {
 
     const navigate = useNavigate();
 
-    const [animation_tile_opacity, setAnimation_tile_opacity] = useState(0.0);
-    const [animation_title_opacity, setAnimation_title_opacity] = useState(0.0);
-    const [animation_field_opacity, setAnimation_field_opacity] = useState(0.0);
+    const electron = localStorage.getItem("device_type") === "electron";
 
-    const [animation_title_size, setAnimation_title_size] = useState(50);
-    const [animation_icon_size, setAnimation_icon_size] = useState("40%");
-    const [animation_tile_size, setAnimation_tile_size] = useState(10);
+    const [animation_tile_opacity, setAnimation_tile_opacity] = useState(
+        electron ? 1 : 0.0,
+    );
+    const [animation_title_opacity, setAnimation_title_opacity] = useState(0.0);
+    const [animation_field_opacity, setAnimation_field_opacity] = useState(
+        electron ? 1 : 0.0,
+    );
+
+    const [animation_title_size, setAnimation_title_size] = useState(
+        electron ? 40 : 50,
+    );
+    const [animation_icon_size, setAnimation_icon_size] = useState(
+        electron ? "30%" : "40%",
+    );
+    const [animation_tile_size, setAnimation_tile_size] = useState(
+        electron ? 7 : 10,
+    );
 
     const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         i18n.changeLanguage(navigator.language || "en");
         localStorage.setItem("locale", i18n.language);
+
+        if (electron) return;
 
         if (searchParams.get("skip_intro") === "1") {
             setAnimation_tile_opacity(1);
@@ -155,7 +169,9 @@ export default function Setup() {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 p: animation_tile_size,
-                transition: "0.5s all, 2s padding",
+                transition: `${electron ? "0s" : "0.5s"} all, ${
+                    electron ? "0s" : "2s"
+                } padding`,
                 opacity: animation_tile_opacity,
                 width: { xs: "90%", md: "auto" },
             }}
@@ -172,7 +188,7 @@ export default function Setup() {
                     style={{
                         width: animation_icon_size,
                         textAlign: "center",
-                        transition: "2s width",
+                        transition: `${electron ? "0s" : "2s"} width`,
                     }}
                 />
             </Box>
@@ -180,7 +196,9 @@ export default function Setup() {
                 sx={{
                     fontSize: animation_title_size,
                     opacity: animation_title_opacity,
-                    transition: `1s opacity, 2s font-size`,
+                    transition: `${electron ? "0s" : "1s"} opacity, ${
+                        electron ? "0s" : "2s"
+                    } font-size`,
                     textAlign: "center",
                     cursor: "default",
                 }}
@@ -193,7 +211,7 @@ export default function Setup() {
                 onChange={(event) => setServerAddressField(event.target.value)}
                 sx={{
                     opacity: animation_field_opacity,
-                    transition: "1s opacity",
+                    transition: `${electron ? "0s" : "1s"} opacity`,
                 }}
                 onKeyDown={handleSetup}
                 disabled={animation_title_size > 40}

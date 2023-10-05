@@ -82,7 +82,7 @@ export default function Dashboard() {
         }
 
         if (localStorage.getItem("device_type") === "electron") {
-            window.close();
+            console.log("CONFIG");
             return;
         }
 
