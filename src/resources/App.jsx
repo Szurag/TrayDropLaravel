@@ -12,6 +12,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import SnackbarSetupInfo from "./components/Snackbar/SnackbarSetupInfo";
 import TokenScrapper from "./pages/TokenScrapper/TokenScrapper.jsx";
+import { Box } from "@mui/material";
 
 const validateToken = () => {
     return axios
@@ -124,42 +125,47 @@ function App() {
 
     return (
         <ThemeProvider theme={darkTheme}>
-            <SnackbarProvider
-                maxSnack={5}
-                autoHideDuration={2000}
-                style={{ paddingRight: "50px" }}
-                action={(snackbarKey) => (
-                    <SnackbarCloseButton snackbarKey={snackbarKey} />
-                )}
-            >
-                <CssBaseline />
-                <BrowserRouter>
-                    <SnackbarSetupInfo status={snackbarState} />
-                    <Routes>
-                        <Route
-                            index
-                            element={
-                                <ProtectedRoute>
-                                    <Dashboard />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route
-                            path="dashboard"
-                            element={
-                                <ProtectedRoute>
-                                    <Dashboard />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route path="login" element={<Login />} />
-                        <Route path="register" element={<Register />} />
-                        <Route path="setup" element={<Setup />} />
-                        <Route path="credentials" element={<TokenScrapper />} />
-                        <Route path="*" element={<E404 />} />
-                    </Routes>
-                </BrowserRouter>
-            </SnackbarProvider>
+            <Box sx={{ height: "100vh" }}>
+                <SnackbarProvider
+                    maxSnack={5}
+                    autoHideDuration={2000}
+                    style={{ paddingRight: "50px" }}
+                    action={(snackbarKey) => (
+                        <SnackbarCloseButton snackbarKey={snackbarKey} />
+                    )}
+                >
+                    <CssBaseline />
+                    <BrowserRouter>
+                        <SnackbarSetupInfo status={snackbarState} />
+                        <Routes>
+                            <Route
+                                index
+                                element={
+                                    <ProtectedRoute>
+                                        <Dashboard />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="dashboard"
+                                element={
+                                    <ProtectedRoute>
+                                        <Dashboard />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route path="login" element={<Login />} />
+                            <Route path="register" element={<Register />} />
+                            <Route path="setup" element={<Setup />} />
+                            <Route
+                                path="credentials"
+                                element={<TokenScrapper />}
+                            />
+                            <Route path="*" element={<E404 />} />
+                        </Routes>
+                    </BrowserRouter>
+                </SnackbarProvider>
+            </Box>
         </ThemeProvider>
     );
 }
