@@ -206,9 +206,6 @@ export default function Setup() {
                         opacity: animation_title_opacity,
                         transition: `1s opacity, 2s font-size`,
                         textAlign: "center",
-<<<<<<< HEAD
-                        transition: `${electron ? "0s" : "2s"} width`,
-=======
                         cursor: "default",
                     }}
                 >
@@ -257,70 +254,12 @@ export default function Setup() {
                                 )}
                             </InputAdornment>
                         ),
->>>>>>> b6f307a (fix/common-fixes)
                     }}
                 />
             </Tile>
             <PairdropEmbed state={pairdropState} />
             <Box
                 sx={{
-<<<<<<< HEAD
-                    fontSize: animation_title_size,
-                    opacity: animation_title_opacity,
-                    transition: `${electron ? "0s" : "1s"} opacity, ${
-                        electron ? "0s" : "2s"
-                    } font-size`,
-                    textAlign: "center",
-                    cursor: "default",
-                }}
-            >
-                {t("main:setup.welcome_message")}
-            </Typography>
-            <TextField
-                label={t("main:setup.server_address")}
-                value={serverAddressField}
-                onChange={(event) => setServerAddressField(event.target.value)}
-                sx={{
-                    opacity: animation_field_opacity,
-                    transition: `${electron ? "0s" : "1s"} opacity`,
-                }}
-                onKeyDown={handleSetup}
-                disabled={animation_title_size > 40}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            {!!isServerLoading ? (
-                                <CircularProgress
-                                    sx={{ color: "white" }}
-                                    size={15}
-                                />
-                            ) : !!isServerResponding ? (
-                                <Tooltip title={t("main:continue")}>
-                                    <IconButton onClick={handleSetup}>
-                                        <Icon
-                                            icon="icons8:right-round"
-                                            style={{
-                                                color: "#eee",
-                                                fontSize: "35px",
-                                            }}
-                                        />
-                                    </IconButton>
-                                </Tooltip>
-                            ) : (
-                                <Icon
-                                    icon="typcn:times"
-                                    style={{
-                                        fontSize: "20px",
-                                        color: "#cc4444",
-                                    }}
-                                />
-                            )}
-                        </InputAdornment>
-                    ),
-                }}
-            />
-        </Tile>
-=======
                     position: "absolute",
                     right: pairdropPositionOffset + -48 + "px",
                     bottom: pairdropPositionOffset + -48 + "px",
@@ -342,6 +281,5 @@ export default function Setup() {
                 </IconButton>
             </Box>
         </>
->>>>>>> b6f307a (fix/common-fixes)
     );
 }
