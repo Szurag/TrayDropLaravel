@@ -83,7 +83,6 @@ export default function Dashboard() {
 
         if (localStorage.getItem("device_type") === "electron") {
             console.log("CONFIG");
-            return;
         }
 
         setPasswd(
