@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
 import Files from "./Files/Files.jsx";
 import Clipboard from "./Clipboard/Clipboard.jsx";
-import Profile from "./Shared/Shared.jsx";
+import Shared from "./Shared/Shared.jsx";
 import pairdrop from "../../assets/img/pairdrop.png";
 import PairdropMobile from "./Pairdrop/PairdropMobile.jsx";
 
@@ -40,7 +40,7 @@ export default function Mobile({
             case 2:
                 setPairdropDisplay(false);
                 setBody(
-                    <Profile
+                    <Shared
                         updateData={updateData}
                         reRenderShared={reRenderShared}
                     />,

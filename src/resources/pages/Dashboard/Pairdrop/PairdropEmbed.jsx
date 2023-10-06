@@ -15,6 +15,7 @@ export default function PairdropEmbed({ state }) {
                 opacity: state ? 1.0 : 0.0,
                 transform: state ? "" : "scale(0.7, 0.7)",
                 transition: "0.2s",
+                zIndex: state ? 5 : -1,
             }}
         >
             <PairdropIframe />

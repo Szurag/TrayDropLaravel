@@ -144,7 +144,7 @@ export default function ShareList({ updateData, reRenderShared, ...props }) {
                                 new Date(item.expiration_date) > new Date() && (
                                     <Card
                                         key={itemIndex}
-                                        type="clipboard"
+                                        type="share"
                                         sx={{ mb: 2 }}
                                         icon={
                                             <Icon
