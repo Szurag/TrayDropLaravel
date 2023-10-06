@@ -17,6 +17,8 @@ import { generatePath, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useDebounceEffect } from "../../components/Tools/useDebounceEffect";
 import { useTheme } from "@mui/material";
+import PairdropEmbed from "../Dashboard/Pairdrop/PairdropEmbed.jsx";
+import pairdrop from "../../assets/img/pairdrop.png";
 
 export default function Setup() {
     const { i18n, t } = useTranslation();
@@ -52,6 +54,13 @@ export default function Setup() {
     );
 
     const [searchParams, setSearchParams] = useSearchParams();
+    const [pairdropPositionOffset, setPairdropPositionOffset] = useState(0);
+    const [pairdropState, setPairdropState] = useState(false);
+
+    const handleTogglePairdrop = () => {
+        setPairdropPositionOffset(pairdropState ? 0 : 48);
+        setPairdropState(!pairdropState);
+    };
 
     useEffect(() => {
         i18n.changeLanguage(navigator.language || "en");
@@ -162,38 +171,100 @@ export default function Setup() {
     };
 
     return (
-        <Tile
-            sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                p: animation_tile_size,
-                transition: `${electron ? "0s" : "0.5s"} all, ${
-                    electron ? "0s" : "2s"
-                } padding`,
-                opacity: animation_tile_opacity,
-                width: { xs: "90%", md: "auto" },
-            }}
-        >
-            <Box
+        <>
+            <Tile
                 sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    p: animation_tile_size,
+                    transition: "0.5s all, 2s padding",
+                    opacity: animation_tile_opacity,
+                    width: { xs: "90%", md: "auto" },
                 }}
             >
-                <img
-                    src={icon}
-                    style={{
-                        width: animation_icon_size,
+                <Box
+                    sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                >
+                    <img
+                        src={icon}
+                        style={{
+                            width: animation_icon_size,
+                            textAlign: "center",
+                            transition: "2s width",
+                        }}
+                    />
+                </Box>
+                <Typography
+                    sx={{
+                        fontSize: animation_title_size,
+                        opacity: animation_title_opacity,
+                        transition: `1s opacity, 2s font-size`,
                         textAlign: "center",
+<<<<<<< HEAD
                         transition: `${electron ? "0s" : "2s"} width`,
+=======
+                        cursor: "default",
+                    }}
+                >
+                    {t("main:setup.welcome_message")}
+                </Typography>
+                <TextField
+                    label={t("main:setup.server_address")}
+                    value={serverAddressField}
+                    onChange={(event) =>
+                        setServerAddressField(event.target.value)
+                    }
+                    sx={{
+                        opacity: animation_field_opacity,
+                        transition: "1s opacity",
+                    }}
+                    onKeyDown={handleSetup}
+                    disabled={animation_title_size > 40}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                {!!isServerLoading ? (
+                                    <CircularProgress
+                                        sx={{ color: "white" }}
+                                        size={15}
+                                    />
+                                ) : !!isServerResponding ? (
+                                    <Tooltip title={t("main:continue")}>
+                                        <IconButton onClick={handleSetup}>
+                                            <Icon
+                                                icon="icons8:right-round"
+                                                style={{
+                                                    color: "#eee",
+                                                    fontSize: "35px",
+                                                }}
+                                            />
+                                        </IconButton>
+                                    </Tooltip>
+                                ) : (
+                                    <Icon
+                                        icon="typcn:times"
+                                        style={{
+                                            fontSize: "20px",
+                                            color: "#cc4444",
+                                        }}
+                                    />
+                                )}
+                            </InputAdornment>
+                        ),
+>>>>>>> b6f307a (fix/common-fixes)
                     }}
                 />
-            </Box>
-            <Typography
+            </Tile>
+            <PairdropEmbed state={pairdropState} />
+            <Box
                 sx={{
+<<<<<<< HEAD
                     fontSize: animation_title_size,
                     opacity: animation_title_opacity,
                     transition: `${electron ? "0s" : "1s"} opacity, ${
@@ -249,5 +320,28 @@ export default function Setup() {
                 }}
             />
         </Tile>
+=======
+                    position: "absolute",
+                    right: pairdropPositionOffset + -48 + "px",
+                    bottom: pairdropPositionOffset + -48 + "px",
+                    transition: "0.2s",
+                    "&:hover": {
+                        right: pairdropState
+                            ? pairdropPositionOffset + -48 + "px"
+                            : "-24px",
+                        bottom: pairdropState
+                            ? pairdropPositionOffset + -48 + "px"
+                            : "-24px",
+                        pr: "5px",
+                        pb: "5px",
+                    },
+                }}
+            >
+                <IconButton onClick={handleTogglePairdrop}>
+                    <img src={pairdrop} height="48px" width="48px" />
+                </IconButton>
+            </Box>
+        </>
+>>>>>>> b6f307a (fix/common-fixes)
     );
 }

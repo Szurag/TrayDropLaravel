@@ -12,7 +12,7 @@ import axios from "axios";
 import Loading from "./DiskSpace/Loading";
 import ShareList from "./ShareList.jsx";
 
-export default function Settings({ updateData, reRenderShared }) {
+export default function Shared({ updateData, reRenderShared }) {
     const { i18n, t } = useTranslation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [menuAnchorEl, setMenuAnchorEl] = useState(null);

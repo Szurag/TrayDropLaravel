@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import Tile from "../../components/Tile/Tile";
-import { Button, TextField, Box, Typography } from "@mui/material";
+import { Button, TextField, Box, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { generatePath, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -8,6 +8,8 @@ import hashPassword from "../../components/Tools/hashAlgorithm";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import LoadingButton from "@mui/lab/LoadingButton";
+import PairdropEmbed from "../Dashboard/Pairdrop/PairdropEmbed.jsx";
+import pairdrop from "../../assets/img/pairdrop.png";
 
 export default function Login() {
     const [t] = useTranslation();
@@ -16,6 +18,13 @@ export default function Login() {
 
     const [animation_tile_opacity, setAnimation_tile_opacity] = useState(0.0);
     const [loginLoading, setLoginLoading] = useState(false);
+    const [pairdropPositionOffset, setPairdropPositionOffset] = useState(0);
+    const [pairdropState, setPairdropState] = useState(false);
+
+    const handleTogglePairdrop = () => {
+        setPairdropPositionOffset(pairdropState ? 0 : 48);
+        setPairdropState(!pairdropState);
+    };
 
     useEffect(() => {
         if (!localStorage.getItem("hostname")?.length > 0) {
@@ -179,6 +188,29 @@ export default function Login() {
                     </form>
                 </FormProvider>
             </Tile>
+            <PairdropEmbed state={pairdropState} />
+            <Box
+                sx={{
+                    position: "absolute",
+                    right: pairdropPositionOffset + -48 + "px",
+                    bottom: pairdropPositionOffset + -48 + "px",
+                    transition: "0.2s",
+                    "&:hover": {
+                        right: pairdropState
+                            ? pairdropPositionOffset + -48 + "px"
+                            : "-24px",
+                        bottom: pairdropState
+                            ? pairdropPositionOffset + -48 + "px"
+                            : "-24px",
+                        pr: "5px",
+                        pb: "5px",
+                    },
+                }}
+            >
+                <IconButton onClick={handleTogglePairdrop}>
+                    <img src={pairdrop} height="48px" width="48px" />
+                </IconButton>
+            </Box>
         </>
     );
 }

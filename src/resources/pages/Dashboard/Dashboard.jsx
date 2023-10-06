@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { generatePath } from "react-router-dom";
 import Mobile from "./Mobile";
 import { caesarShift, hex2a } from "../../components/Tools/caesarShift";
-import Profile from "./Shared/Shared.jsx";
+import Shared from "./Shared/Shared.jsx";
 import Files from "./Files/Files.jsx";
 import Clipboard from "./Clipboard/Clipboard.jsx";
 import {
@@ -156,7 +156,7 @@ export default function Dashboard() {
                 >
                     {!!passwd && (
                         <>
-                            <Profile
+                            <Shared
                                 updateData={updateData}
                                 reRenderShared={reRenderShared}
                             />
