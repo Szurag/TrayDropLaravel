@@ -1,5 +1,5 @@
 import axios from "axios";
-import { forbiddenLogout } from "./ApiUtils.js";
+import {forbiddenLogout} from "./ApiUtils.js";
 
 export const filesList = (data, callback) => {
     axios
@@ -27,6 +27,8 @@ export const filesCreate = (data, onUploadProgress, callback) => {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 Accept: "application/json",
+                "Content-Type": "multipart/form-data",
+                "Content-Encoding": "multipart/form-data",
             },
             onUploadProgress: onUploadProgress,
             cancelToken: data.cancelToken,
