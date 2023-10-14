@@ -1,7 +1,7 @@
 import Tile from "../../../components/Tile/Tile.jsx";
 import PairdropIframe from "./PairdropIframe.jsx";
 
-export default function PairdropEmbed({ state }) {
+export default function PairdropEmbed({ state, sx }) {
     return (
         <Tile
             sx={{
@@ -16,6 +16,7 @@ export default function PairdropEmbed({ state }) {
                 transform: state ? "" : "scale(0.7, 0.7)",
                 transition: "0.2s",
                 zIndex: state ? 5 : -1,
+                ...sx,
             }}
         >
             <PairdropIframe />

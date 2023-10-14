@@ -67,7 +67,7 @@ export default function Mobile({
 
     return (
         <>
-            <Box sx={{ p: 3, height: "100vh", pb: 10 }}>
+            <Box sx={{ p: 3, height: "90vh" }}>
                 {body}
                 <PairdropMobile
                     sx={{ display: pairdropDisplay ? "block" : "none" }}
