@@ -6,13 +6,13 @@
 
 High privacy and Lightweight Files and Clipboard cloud storage with share feature.<br>
 **[Check it out »](https://traydrop.pl/)**<br><br><br>
-**[Website](https://traydrop.pl/) · [TrayDrop Server](https://github.com/Szurag/TrayDropLaravel) · [Desktop App (in progress)](about:blank) · [Mobile App (in progress)](about:blank)**
+**[Website](https://traydrop.pl/) · [Desktop App](https://github.com/onhq11/Traydrop) · [TrayDrop Server](https://github.com/Szurag/TrayDropLaravel) · [TrayDrop CLI](https://github.com/onhq11/Traydrop-cli) · [Mobile App (in progress)](about:blank)**
 
 </div><br><br>
 
 ## About
 
-TrayDrop is an open-source website that allows you to upload files and clipboard content to the server and automatically synchronize between devices using websockets. Traydrop is also providing share links with expiration date, for easy share files. This lightweight solution will run even on the slowest machines, with instant synchronization. We offer our [Website](https://traydrop.pl/), but if you have an iOS based phone, you can use our Apple Shortcuts for faster access from the sharing drawer [Send to Traydrop](https://www.icloud.com/shortcuts/216ad9c4c6874202a36bbe2e14722118) and [Share via Traydrop](https://www.icloud.com/shortcuts/4c6c3fed6eb94ae6acae0142efc409a3). Also if you want to set up a server on your hardware, you can do it using our [TrayDrop Server](https://github.com/Szurag/TrayDropLaravel) based on Laravel. There you will find a guide on how to do it and enjoy your private server.
+TrayDrop is an open-source website that allows you to upload files and clipboard content to the server and automatically synchronize between devices using websockets. Traydrop is also providing share links with expiration date, for easy share files. This lightweight solution will run even on the slowest machines, with instant synchronization. We offer our [Website](https://traydrop.pl/), [Desktop app](https://github.com/onhq11/Traydrop) and [Command line tool](https://github.com/onhq11/Traydrop-cli), but if you have an iOS based phone, you can use our Apple Shortcuts for faster access from the sharing drawer [Send to Traydrop](https://www.icloud.com/shortcuts/216ad9c4c6874202a36bbe2e14722118) and [Share via Traydrop](https://www.icloud.com/shortcuts/4c6c3fed6eb94ae6acae0142efc409a3). Also if you want to set up a server on your hardware, you can do it using our [TrayDrop Server](https://github.com/Szurag/TrayDropLaravel) based on Laravel. There you will find a guide on how to do it and enjoy your private server.
 
 ## How to use?
 - Go to [our Website](https://traydrop.pl/)
@@ -42,7 +42,7 @@ TrayDrop is an open-source website that allows you to upload files and clipboard
 - MariaDB (Database)
 - Redis (Quick Access Database)
 - Websockets (For instant sync without refresh)
-- nginx (Web Server)
+- Nginx (Web Server)
 
 ## Features
 
