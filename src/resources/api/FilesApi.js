@@ -1,5 +1,5 @@
 import axios from "axios";
-import {forbiddenLogout} from "./ApiUtils.js";
+import { forbiddenLogout } from "./ApiUtils.js";
 
 export const filesList = (data, callback) => {
     axios

@@ -188,7 +188,10 @@ export default function Login() {
                     </form>
                 </FormProvider>
             </Tile>
-            <PairdropEmbed state={pairdropState} />
+            <PairdropEmbed
+                state={pairdropState}
+                sx={{ display: { xs: "none", lg: "block" } }}
+            />
             <Box
                 sx={{
                     position: "absolute",
@@ -205,6 +208,7 @@ export default function Login() {
                         pr: "5px",
                         pb: "5px",
                     },
+                    display: { xs: "none", lg: "block" },
                 }}
             >
                 <IconButton onClick={handleTogglePairdrop}>
